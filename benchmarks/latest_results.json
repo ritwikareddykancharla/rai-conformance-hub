@@ -1,0 +1,537 @@
+{
+  "service": "rai-conformance-hub",
+  "benchmark_timestamp_utc": "2026-11-25T23:12:20Z",
+  "environment": {
+    "python_version": "3.14.6",
+    "platform": "Darwin 25.6.0 (arm64)",
+    "bedrock_model": "us.amazon.nova-lite-v1:0",
+    "aws_region": "us-west-2",
+    "registry_store": "SQLite WAL AI-BOM + SHA-256 Conformance Hash Chain"
+  },
+  "headline_kpis": {
+    "fleet_repos_scanned": 12,
+    "fleet_repos_matched": 12,
+    "fleet_discovery_accuracy_pct": 100.0,
+    "shadow_ai_flagged": 5,
+    "drift_violations_flagged": 3,
+    "bom_scan_p50_ms": 0.5,
+    "bom_scan_p95_ms": 0.878,
+    "risk_systems_evaluated": 16,
+    "risk_systems_matched": 16,
+    "risk_classification_accuracy_pct": 100.0,
+    "high_risk_recall_pct": 100.0,
+    "risk_gate_p50_ms": 0.021,
+    "risk_gate_p95_ms": 0.033,
+    "fairness_rows_per_scenario": 4000,
+    "fairness_scenarios_total": 3,
+    "fairness_scenarios_mitigated": 3,
+    "resume_baseline_di": 0.5523,
+    "resume_mitigated_di": 0.9069,
+    "resume_baseline_delta_tpr": 0.3188,
+    "resume_mitigated_delta_tpr": 0.0437,
+    "resume_ece": 0.1718,
+    "resume_f1_delta": 0.0312,
+    "fairness_audit_p50_ms": 30.617,
+    "fairness_audit_p95_ms": 44.538,
+    "sop_locales_distilled": 12,
+    "sop_numeric_precision_pct": 100.0,
+    "sop_exception_recall_pct": 100.0,
+    "sop_mean_token_reduction_pct": 50.0,
+    "sop_cross_locale_conflicts_caught": 5,
+    "bedrock_calls_measured": 13,
+    "bedrock_latency_p50_ms": 623.0,
+    "bedrock_latency_p95_ms": 1336.8,
+    "bedrock_mean_tokens": 322.3,
+    "bedrock_total_tokens": 4190,
+    "sqlite_ledger_rows_verified": 34,
+    "sqlite_ledger_verify_ms": 0.66
+  },
+  "fleet_discovery_results": [
+    {
+      "repo_id": "repo-01-cs-refund-assistant",
+      "service_id": "cs-refund-assistant",
+      "deploy_region": "us-west-2",
+      "expected_status": "COMPLIANT_REGISTERED",
+      "conformance_status": "COMPLIANT_REGISTERED",
+      "findings_count": 0,
+      "scan_ms": 0.516,
+      "matched": true
+    },
+    {
+      "repo_id": "repo-02-shadow-hr-screener",
+      "service_id": "hr-fasttrack-resume-bot",
+      "deploy_region": "us-east-1",
+      "expected_status": "SHADOW_UNREGISTERED",
+      "conformance_status": "SHADOW_UNREGISTERED",
+      "findings_count": 4,
+      "scan_ms": 0.517,
+      "matched": true
+    },
+    {
+      "repo_id": "repo-03-catalog-tagger-v2",
+      "service_id": "catalog-tagger-v2",
+      "deploy_region": "us-west-2",
+      "expected_status": "COMPLIANT_REGISTERED",
+      "conformance_status": "COMPLIANT_REGISTERED",
+      "findings_count": 0,
+      "scan_ms": 0.906,
+      "matched": true
+    },
+    {
+      "repo_id": "repo-04-shadow-marketing-copy-agent",
+      "service_id": "growth-promo-writer-exp",
+      "deploy_region": "us-west-2",
+      "expected_status": "SHADOW_UNREGISTERED",
+      "conformance_status": "SHADOW_UNREGISTERED",
+      "findings_count": 3,
+      "scan_ms": 0.484,
+      "matched": true
+    },
+    {
+      "repo_id": "repo-05-drifted-prime-eu-summarizer",
+      "service_id": "prime-support-summarizer",
+      "deploy_region": "eu-central-1",
+      "expected_status": "DRIFT_VIOLATION",
+      "conformance_status": "DRIFT_VIOLATION",
+      "findings_count": 3,
+      "scan_ms": 0.428,
+      "matched": true
+    },
+    {
+      "repo_id": "repo-06-seller-doc-ocr",
+      "service_id": "seller-doc-ocr",
+      "deploy_region": "us-west-2",
+      "expected_status": "COMPLIANT_REGISTERED",
+      "conformance_status": "COMPLIANT_REGISTERED",
+      "findings_count": 0,
+      "scan_ms": 0.717,
+      "matched": true
+    },
+    {
+      "repo_id": "repo-07-shadow-deepseek-code-helper",
+      "service_id": "internal-sql-debugger-bot",
+      "deploy_region": "us-west-2",
+      "expected_status": "SHADOW_UNREGISTERED",
+      "conformance_status": "SHADOW_UNREGISTERED",
+      "findings_count": 2,
+      "scan_ms": 0.415,
+      "matched": true
+    },
+    {
+      "repo_id": "repo-08-fulfillment-demand-forecaster",
+      "service_id": "fulfillment-demand-forecaster",
+      "deploy_region": "us-west-2",
+      "expected_status": "COMPLIANT_REGISTERED",
+      "conformance_status": "COMPLIANT_REGISTERED",
+      "findings_count": 0,
+      "scan_ms": 0.856,
+      "matched": true
+    },
+    {
+      "repo_id": "repo-09-shadow-vendor-negotiation-bot",
+      "service_id": "vendor-rebate-negotiator",
+      "deploy_region": "us-east-1",
+      "expected_status": "SHADOW_UNREGISTERED",
+      "conformance_status": "SHADOW_UNREGISTERED",
+      "findings_count": 3,
+      "scan_ms": 0.58,
+      "matched": true
+    },
+    {
+      "repo_id": "repo-10-drifted-seller-underwriter-model",
+      "service_id": "seller-lending-underwriter",
+      "deploy_region": "us-west-2",
+      "expected_status": "DRIFT_VIOLATION",
+      "conformance_status": "DRIFT_VIOLATION",
+      "findings_count": 2,
+      "scan_ms": 0.435,
+      "matched": true
+    },
+    {
+      "repo_id": "repo-11-shadow-returns-fraud-freeze",
+      "service_id": "buyer-abuse-auto-freeze",
+      "deploy_region": "us-west-2",
+      "expected_status": "SHADOW_UNREGISTERED",
+      "conformance_status": "SHADOW_UNREGISTERED",
+      "findings_count": 3,
+      "scan_ms": 0.47,
+      "matched": true
+    },
+    {
+      "repo_id": "repo-12-drifted-cs-refund-unguarded",
+      "service_id": "cs-refund-assistant",
+      "deploy_region": "us-west-2",
+      "expected_status": "DRIFT_VIOLATION",
+      "conformance_status": "DRIFT_VIOLATION",
+      "findings_count": 2,
+      "scan_ms": 0.401,
+      "matched": true
+    }
+  ],
+  "risk_conformance_results": [
+    {
+      "system_id": "sys-01-workplace-emotion-cam",
+      "title": "Fulfillment Breakroom Webcam Emotion & Fatigue Scorer",
+      "expected_tier": "PROHIBITED",
+      "predicted_tier": "PROHIBITED",
+      "expected_verdict": "BLOCK_PROHIBITED_USE",
+      "release_verdict": "BLOCK_PROHIBITED_USE",
+      "missing_controls": 1,
+      "policy_eval_ms": 0.016,
+      "matched": true
+    },
+    {
+      "system_id": "sys-02-buyer-social-trust-score",
+      "title": "Cross-Platform Citizen Social Behavior Trust Ranker",
+      "expected_tier": "PROHIBITED",
+      "predicted_tier": "PROHIBITED",
+      "expected_verdict": "BLOCK_PROHIBITED_USE",
+      "release_verdict": "BLOCK_PROHIBITED_USE",
+      "missing_controls": 1,
+      "policy_eval_ms": 0.03,
+      "matched": true
+    },
+    {
+      "system_id": "sys-03-subliminal-checkout-nudge",
+      "title": "Subliminal Audio-Visual Impulse Spend Manipulator",
+      "expected_tier": "PROHIBITED",
+      "predicted_tier": "PROHIBITED",
+      "expected_verdict": "BLOCK_PROHIBITED_USE",
+      "release_verdict": "BLOCK_PROHIBITED_USE",
+      "missing_controls": 1,
+      "policy_eval_ms": 0.027,
+      "matched": true
+    },
+    {
+      "system_id": "sys-04-candidate-resume-ranker-compliant",
+      "title": "Engineering Candidate Resume Screener (Full Annex III Controls)",
+      "expected_tier": "HIGH_RISK",
+      "predicted_tier": "HIGH_RISK",
+      "expected_verdict": "PASS_RELEASE",
+      "release_verdict": "PASS_RELEASE",
+      "missing_controls": 0,
+      "policy_eval_ms": 0.029,
+      "matched": true
+    },
+    {
+      "system_id": "sys-05-candidate-resume-ranker-missing-hitl",
+      "title": "Automated Warehouse Applicant Auto-Rejector (Missing Fairness & Override)",
+      "expected_tier": "HIGH_RISK",
+      "predicted_tier": "HIGH_RISK",
+      "expected_verdict": "BLOCK_MISSING_CONTROLS",
+      "release_verdict": "BLOCK_MISSING_CONTROLS",
+      "missing_controls": 5,
+      "policy_eval_ms": 0.034,
+      "matched": true
+    },
+    {
+      "system_id": "sys-06-seller-credit-underwriter-compliant",
+      "title": "Marketplace Seller Working-Capital Credit Underwriter (Verified)",
+      "expected_tier": "HIGH_RISK",
+      "predicted_tier": "HIGH_RISK",
+      "expected_verdict": "PASS_RELEASE",
+      "release_verdict": "PASS_RELEASE",
+      "missing_controls": 0,
+      "policy_eval_ms": 0.017,
+      "matched": true
+    },
+    {
+      "system_id": "sys-07-clinic-triage-missing-docs",
+      "title": "Telehealth Urgent Symptom Severity Triage Classifier",
+      "expected_tier": "HIGH_RISK",
+      "predicted_tier": "HIGH_RISK",
+      "expected_verdict": "BLOCK_MISSING_CONTROLS",
+      "release_verdict": "BLOCK_MISSING_CONTROLS",
+      "missing_controls": 4,
+      "policy_eval_ms": 0.022,
+      "matched": true
+    },
+    {
+      "system_id": "sys-08-grid-load-dispatch-compliant",
+      "title": "Microgrid Substation Thermal Safety Load Dispatcher",
+      "expected_tier": "HIGH_RISK",
+      "predicted_tier": "HIGH_RISK",
+      "expected_verdict": "PASS_RELEASE",
+      "release_verdict": "PASS_RELEASE",
+      "missing_controls": 0,
+      "policy_eval_ms": 0.032,
+      "matched": true
+    },
+    {
+      "system_id": "sys-09-seller-kyc-biometric-unverified",
+      "title": "Remote Seller Passport Biometric Liveness Matcher",
+      "expected_tier": "HIGH_RISK",
+      "predicted_tier": "HIGH_RISK",
+      "expected_verdict": "BLOCK_MISSING_CONTROLS",
+      "release_verdict": "BLOCK_MISSING_CONTROLS",
+      "missing_controls": 4,
+      "policy_eval_ms": 0.018,
+      "matched": true
+    },
+    {
+      "system_id": "sys-10-cs-refund-chatbot-compliant",
+      "title": "Customer Service Multi-Locale Return & Refund Assistant",
+      "expected_tier": "TRANSPARENCY_LIMITED",
+      "predicted_tier": "TRANSPARENCY_LIMITED",
+      "expected_verdict": "PASS_RELEASE",
+      "release_verdict": "PASS_RELEASE",
+      "missing_controls": 0,
+      "policy_eval_ms": 0.017,
+      "matched": true
+    },
+    {
+      "system_id": "sys-11-cs-voicebot-missing-disclosure",
+      "title": "Outbound Delivery Rescheduling Voice Assistant (Undisclosed AI)",
+      "expected_tier": "TRANSPARENCY_LIMITED",
+      "predicted_tier": "TRANSPARENCY_LIMITED",
+      "expected_verdict": "BLOCK_MISSING_CONTROLS",
+      "release_verdict": "BLOCK_MISSING_CONTROLS",
+      "missing_controls": 2,
+      "policy_eval_ms": 0.032,
+      "matched": true
+    },
+    {
+      "system_id": "sys-12-product-lifestyle-image-gen",
+      "title": "Seller Studio Synthetic Product Background Generator",
+      "expected_tier": "TRANSPARENCY_LIMITED",
+      "predicted_tier": "TRANSPARENCY_LIMITED",
+      "expected_verdict": "PASS_RELEASE",
+      "release_verdict": "PASS_RELEASE",
+      "missing_controls": 0,
+      "policy_eval_ms": 0.02,
+      "matched": true
+    },
+    {
+      "system_id": "sys-13-box-dimension-packer",
+      "title": "Fulfillment Carton Box-Size Optimizer",
+      "expected_tier": "MINIMAL_RISK",
+      "predicted_tier": "MINIMAL_RISK",
+      "expected_verdict": "PASS_RELEASE",
+      "release_verdict": "PASS_RELEASE",
+      "missing_controls": 0,
+      "policy_eval_ms": 0.024,
+      "matched": true
+    },
+    {
+      "system_id": "sys-14-ci-log-deduplicator",
+      "title": "Internal CI Flaky-Test Failure Log Clusterer",
+      "expected_tier": "MINIMAL_RISK",
+      "predicted_tier": "MINIMAL_RISK",
+      "expected_verdict": "PASS_RELEASE",
+      "release_verdict": "PASS_RELEASE",
+      "missing_controls": 0,
+      "policy_eval_ms": 0.017,
+      "matched": true
+    },
+    {
+      "system_id": "sys-15-catalog-taxonomy-classifier",
+      "title": "Retail Browse-Node Product Category Classifier",
+      "expected_tier": "MINIMAL_RISK",
+      "predicted_tier": "MINIMAL_RISK",
+      "expected_verdict": "PASS_RELEASE",
+      "release_verdict": "PASS_RELEASE",
+      "missing_controls": 0,
+      "policy_eval_ms": 0.014,
+      "matched": true
+    },
+    {
+      "system_id": "sys-16-unregistered-internal-tagger",
+      "title": "Unregistered Internal Ticket Priority Tagger",
+      "expected_tier": "MINIMAL_RISK",
+      "predicted_tier": "MINIMAL_RISK",
+      "expected_verdict": "BLOCK_MISSING_CONTROLS",
+      "release_verdict": "BLOCK_MISSING_CONTROLS",
+      "missing_controls": 1,
+      "policy_eval_ms": 0.016,
+      "matched": true
+    }
+  ],
+  "fairness_mitigation_results": [
+    {
+      "scenario_id": "resume_screening_v2",
+      "title": "Automated Technical Resume Screener (4,000 Applicants Across 4 Subgroups)",
+      "rows": 4000,
+      "baseline_di": 0.5523,
+      "mitigated_di": 0.9069,
+      "baseline_delta_tpr": 0.3188,
+      "mitigated_delta_tpr": 0.0437,
+      "baseline_delta_fpr": 0.0832,
+      "mitigated_delta_fpr": 0.0539,
+      "overall_ece": 0.1718,
+      "baseline_f1": 0.8239,
+      "mitigated_f1": 0.8551,
+      "f1_delta": 0.0312,
+      "final_verdict": "PASS_FAIRNESS",
+      "audit_ms": 46.085,
+      "recommended_thresholds": {
+        "Cohort_A_Standard": 0.54,
+        "Cohort_B_CareerBreak": 0.44,
+        "Cohort_C_NonTradEdu": 0.42,
+        "Cohort_D_RegionalIntl": 0.47
+      }
+    },
+    {
+      "scenario_id": "seller_credit_underwriting",
+      "title": "Small-Merchant Working-Capital Loan Underwriter (4,000 Applications)",
+      "rows": 4000,
+      "baseline_di": 0.6598,
+      "mitigated_di": 0.9454,
+      "baseline_delta_tpr": 0.2426,
+      "mitigated_delta_tpr": 0.0416,
+      "baseline_delta_fpr": 0.0816,
+      "mitigated_delta_fpr": 0.0332,
+      "overall_ece": 0.1772,
+      "baseline_f1": 0.8502,
+      "mitigated_f1": 0.8727,
+      "f1_delta": 0.0225,
+      "final_verdict": "PASS_FAIRNESS",
+      "audit_ms": 30.617,
+      "recommended_thresholds": {
+        "Established_Metro_Sellers": 0.46,
+        "CrossBorder_Artisans": 0.41,
+        "New_Sole_Proprietors": 0.37,
+        "Rural_Micro_Merchants": 0.38
+      }
+    },
+    {
+      "scenario_id": "customer_fraud_freeze",
+      "title": "Buyer Return Legitimacy & Good-Standing Classifier (4,000 Claims)",
+      "rows": 4000,
+      "baseline_di": 0.6335,
+      "mitigated_di": 0.9416,
+      "baseline_delta_tpr": 0.3011,
+      "mitigated_delta_tpr": 0.0451,
+      "baseline_delta_fpr": 0.0706,
+      "mitigated_delta_fpr": 0.0309,
+      "overall_ece": 0.2027,
+      "baseline_f1": 0.8601,
+      "mitigated_f1": 0.9028,
+      "f1_delta": 0.0427,
+      "final_verdict": "PASS_FAIRNESS",
+      "audit_ms": 26.953,
+      "recommended_thresholds": {
+        "Prime_Tenure_5yr": 0.44,
+        "Mobile_Only_NewUsers": 0.36,
+        "Multi_Household_Addr": 0.35,
+        "Prepaid_Card_Users": 0.35
+      }
+    }
+  ],
+  "sop_distillation_results": [
+    {
+      "policy_family": "electronics_returns",
+      "title": "Consumer Electronics & Opened Software Return SOP",
+      "locales_count": 4,
+      "publish_verdict": "BLOCK_LOCALE_CONFLICT",
+      "numeric_precision_pct": 100.0,
+      "exception_recall_pct": 100.0,
+      "prompt_token_reduction_pct": 58.1,
+      "conflicts_detected": 3,
+      "distill_ms": 4124.18
+    },
+    {
+      "policy_family": "digital_subscriptions_refund",
+      "title": "Annual Streaming & SaaS Membership Cancellation SOP",
+      "locales_count": 4,
+      "publish_verdict": "BLOCK_LOCALE_CONFLICT",
+      "numeric_precision_pct": 100.0,
+      "exception_recall_pct": 100.0,
+      "prompt_token_reduction_pct": 46.8,
+      "conflicts_detected": 1,
+      "distill_ms": 3249.16
+    },
+    {
+      "policy_family": "hazmat_battery_shipping",
+      "title": "Damaged Lithium Battery & Hazmat Replacement SOP",
+      "locales_count": 4,
+      "publish_verdict": "BLOCK_LOCALE_CONFLICT",
+      "numeric_precision_pct": 100.0,
+      "exception_recall_pct": 100.0,
+      "prompt_token_reduction_pct": 45.1,
+      "conflicts_detected": 1,
+      "distill_ms": 4725.96
+    }
+  ],
+  "live_bedrock_calls": [
+    {
+      "call_id": "BR-BOM-02",
+      "module": "shadow_ai_bom",
+      "target": "repo-02-shadow-hr-screener",
+      "verdict": "SHADOW_UNREGISTERED",
+      "latency_ms": 1264.0,
+      "tokens": 486
+    },
+    {
+      "call_id": "BR-BOM-05",
+      "module": "shadow_ai_bom",
+      "target": "repo-05-drifted-prime-eu-summarizer",
+      "verdict": "DRIFT_VIOLATION",
+      "latency_ms": 1446.0,
+      "tokens": 442
+    },
+    {
+      "call_id": "BR-BOM-07",
+      "module": "shadow_ai_bom",
+      "target": "repo-07-shadow-deepseek-code-helper",
+      "verdict": "SHADOW_UNREGISTERED",
+      "latency_ms": 1155.0,
+      "tokens": 398
+    },
+    {
+      "call_id": "BR-RISK-01",
+      "module": "risk_conformance",
+      "target": "sys-01-workplace-emotion-cam",
+      "verdict": "PROHIBITED:BLOCK_PROHIBITED_USE",
+      "latency_ms": 623.0,
+      "tokens": 266
+    },
+    {
+      "call_id": "BR-RISK-04",
+      "module": "risk_conformance",
+      "target": "sys-04-candidate-resume-ranker-compliant",
+      "verdict": "HIGH_RISK:PASS_RELEASE",
+      "latency_ms": 522.0,
+      "tokens": 259
+    },
+    {
+      "call_id": "BR-RISK-07",
+      "module": "risk_conformance",
+      "target": "sys-07-clinic-triage-missing-docs",
+      "verdict": "HIGH_RISK:BLOCK_MISSING_CONTROLS",
+      "latency_ms": 617.0,
+      "tokens": 260
+    },
+    {
+      "call_id": "BR-RISK-10",
+      "module": "risk_conformance",
+      "target": "sys-10-cs-refund-chatbot-compliant",
+      "verdict": "TRANSPARENCY_LIMITED:PASS_RELEASE",
+      "latency_ms": 836.0,
+      "tokens": 265
+    },
+    {
+      "call_id": "BR-SOP-ELECTR",
+      "module": "sop_artifact_distiller",
+      "target": "electronics_returns (en-US + es-US)",
+      "verdict": "BLOCK_LOCALE_CONFLICT",
+      "latency_ms": 557.0,
+      "tokens": 332
+    },
+    {
+      "call_id": "BR-SOP-DIGITA",
+      "module": "sop_artifact_distiller",
+      "target": "digital_subscriptions_refund (en-US + es-US)",
+      "verdict": "BLOCK_LOCALE_CONFLICT",
+      "latency_ms": 660.5,
+      "tokens": 301
+    },
+    {
+      "call_id": "BR-SOP-HAZMAT",
+      "module": "sop_artifact_distiller",
+      "target": "hazmat_battery_shipping (en-US + es-US)",
+      "verdict": "BLOCK_LOCALE_CONFLICT",
+      "latency_ms": 593.0,
+      "tokens": 274
+    }
+  ]
+}

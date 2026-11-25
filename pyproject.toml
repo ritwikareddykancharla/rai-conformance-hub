@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rai-conformance-hub"
+version = "1.0.0"
+description = "ResponsibleAIRegistry: Shadow-AI Discovery, EU AI Act & NIST AI RMF Conformance Gate, Subgroup Fairness Auditing, and Verified CS Knowledge Artifact Distillation"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Ritwika Reddy Kancharla" }]
+dependencies = []
+
+[tool.setuptools.packages.find]
+include = ["rai_registry*"]

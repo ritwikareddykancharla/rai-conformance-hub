@@ -1,0 +1,2694 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ResponsibleAIRegistry: Fleet AI Discovery, Regulatory Risk Gate, Fairness Auditing &amp; Verified Policy Artifacts</title>
+  <meta name="description" content="ResponsibleAIRegistry discovers shadow AI across Python ASTs and CloudFormation templates, enforces EU AI Act and NIST AI RMF release gates, mitigates subgroup fairness bias, and distills multi-locale Customer Service policies into verified Knowledge Artifacts on Amazon Bedrock." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;family=Martian+Mono:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&amp;family=Schibsted+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-paper: #FAF7F2;
+      --bg-card: #FFFFFF;
+      --bg-subtle: #F2ECE1;
+      --bg-obsidian: #141413;
+      --bg-code: #121417;
+      --text-code: #F4F4F5;
+      --ink: #141413;
+      --ink-muted: #52514E;
+      --border: #18181B;
+      --shadow: 4px 4px 0px #18181B;
+      --shadow-sm: 2px 2px 0px #18181B;
+      --dot-color: rgba(24, 24, 27, 0.13);
+      --accent-main: #6D28D9;
+      --accent-ink: #FFFFFF;
+      --accent-soft: #EDE9FE;
+      --accent-deep: #4C1D95;
+      --blue: #1D4ED8;
+      --blue-soft: #DBEAFE;
+      --pass: #059669;
+      --pass-soft: #D1FAE5;
+      --fail: #DC2626;
+      --fail-soft: #FEE2E2;
+      --warn: #D97706;
+      --warn-soft: #FEF3C7;
+    }
+
+    [data-theme="dark"] {
+      --bg-paper: #0E1113;
+      --bg-card: #161A1E;
+      --bg-subtle: #1F252B;
+      --bg-obsidian: #090B0C;
+      --bg-code: #090B0D;
+      --text-code: #E4E4E7;
+      --ink: #F4F4F5;
+      --ink-muted: #A1A1AA;
+      --border: #52525B;
+      --shadow: 4px 4px 0px #000000;
+      --shadow-sm: 2px 2px 0px #000000;
+      --dot-color: rgba(255, 255, 255, 0.08);
+      --accent-main: #8B5CF6;
+      --accent-ink: #FFFFFF;
+      --accent-soft: #2E1065;
+      --accent-deep: #DDD6FE;
+      --blue: #60A5FA;
+      --blue-soft: #1E293B;
+      --pass: #34D399;
+      --pass-soft: #064E3B;
+      --fail: #F87171;
+      --fail-soft: #450A0A;
+      --warn: #FBBF24;
+      --warn-soft: #451A03;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Schibsted Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-paper);
+      background-image: radial-gradient(var(--dot-color) 1.25px, transparent 1.25px);
+      background-size: 20px 20px;
+      color: var(--ink);
+      line-height: 1.68;
+      padding-bottom: 4.5rem;
+    }
+
+    .serif { font-family: 'Newsreader', Georgia, serif; }
+    .mono { font-family: 'Martian Mono', monospace; }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.6rem;
+    }
+
+    /* Sticky Topbar + Sticky Scroll-Spy Section TOC */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 120;
+      background: var(--bg-paper);
+      border-bottom: 2px solid var(--border);
+      padding: 0.78rem 0;
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .toc-bar {
+      position: sticky;
+      top: 59px;
+      z-index: 110;
+      background: var(--bg-subtle);
+      border-bottom: 2px solid var(--border);
+      padding: 0.52rem 0;
+    }
+
+    .toc-inner {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      font-family: 'Martian Mono', monospace;
+      font-size: 0.72rem;
+    }
+
+    .toc-link {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      padding: 0.24rem 0.62rem;
+      border: 1.5px solid var(--border);
+      background: var(--bg-card);
+      transition: background 0.12s ease, transform 0.08s ease;
+    }
+
+    .toc-link:hover {
+      background: var(--accent-soft);
+      transform: translate(-1px, -1px);
+    }
+
+    .toc-link.active {
+      background: var(--accent-main);
+      color: var(--accent-ink);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-weight: 800;
+      font-size: 1.14rem;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .brand-badge {
+      background: var(--accent-main);
+      color: var(--accent-ink);
+      font-family: 'Martian Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.22rem 0.58rem;
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn, .nav-pill {
+      font-family: 'Schibsted Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.84rem;
+      padding: 0.5rem 0.92rem;
+      border: 2px solid var(--border);
+      background: var(--bg-card);
+      color: var(--ink);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.12s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn:hover, .nav-pill:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: var(--shadow);
+    }
+
+    .btn:active, .nav-pill:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0px var(--border);
+    }
+
+    .btn:disabled {
+      opacity: 0.58;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-accent { background: var(--accent-main); color: var(--accent-ink); }
+    .btn-obsidian { background: #18181B; color: #FAF7F2; }
+    [data-theme="dark"] .btn-obsidian { background: var(--accent-main); color: #FFFFFF; }
+    .btn-secondary { background: var(--bg-subtle); }
+    .btn-danger { background: var(--fail-soft); color: var(--fail); }
+
+    /* Hero */
+    .hero {
+      padding: 2.6rem 0 2.3rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .hero-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.05rem;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Martian Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      background: var(--accent-main);
+      color: var(--accent-ink);
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .runtime-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: 'Martian Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.3rem 0.7rem;
+      background: var(--bg-card);
+      color: var(--ink);
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--pass);
+      display: inline-block;
+    }
+
+    h1 {
+      font-size: clamp(1.95rem, 3.4vw, 2.78rem);
+      font-weight: 800;
+      line-height: 1.14;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.95rem;
+      max-width: 1060px;
+    }
+
+    .hero-sub {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: clamp(1.14rem, 1.82vw, 1.32rem);
+      line-height: 1.64;
+      color: var(--ink-muted);
+      max-width: 1020px;
+      margin-bottom: 1.35rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.68rem;
+      margin-bottom: 1.45rem;
+    }
+
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.1rem;
+      margin-top: 1.1rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 1.35rem;
+    }
+
+    .kpi-card {
+      padding: 1.15rem 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--accent-main);
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .kpi-val {
+      font-family: 'Martian Mono', monospace;
+      font-size: 1.36rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-top: 0.25rem;
+    }
+
+    .kpi-label { font-size: 0.88rem; font-weight: 800; color: var(--ink); margin-top: 0.24rem; }
+    .kpi-sub { font-size: 0.8rem; color: var(--ink-muted); margin-top: 0.28rem; line-height: 1.5; }
+
+    .pipeline-bar {
+      margin-top: 1.45rem;
+      background: var(--bg-obsidian);
+      color: #FAF7F2;
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 0.95rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+    }
+
+    .pipe-step { display: flex; align-items: center; gap: 0.5rem; font-size: 0.83rem; font-weight: 600; }
+    .pipe-num {
+      font-family: 'Martian Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: var(--accent-main);
+      color: #FFFFFF;
+      padding: 0.14rem 0.44rem;
+      border: 1.5px solid #FFFFFF;
+    }
+    .pipe-arrow { color: #C4B5FD; font-family: 'Martian Mono', monospace; font-weight: 700; }
+
+    /* Sections */
+    .section {
+      padding: 2.8rem 0 2.5rem;
+      border-bottom: 2px solid var(--border);
+      scroll-margin-top: 114px;
+    }
+
+    .section-kicker {
+      display: inline-block;
+      font-family: 'Martian Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--accent-main);
+      margin-bottom: 0.35rem;
+    }
+    [data-theme="dark"] .section-kicker { color: #DDD6FE; }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1.1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.45rem;
+    }
+
+    .section-title {
+      font-size: 1.62rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .section-desc {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1.15rem;
+      line-height: 1.62;
+      color: var(--ink-muted);
+      max-width: 900px;
+      margin-top: 0.32rem;
+    }
+
+    .overview-callout {
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-left: 7px solid var(--accent-main);
+      box-shadow: var(--shadow);
+      padding: 1.35rem 1.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.96rem;
+      line-height: 1.72;
+    }
+
+    .overview-callout h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 0.45rem;
+    }
+
+    .scenario-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 1.45rem 1.55rem;
+      margin-top: 1.5rem;
+    }
+
+    .scenario-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 980px) { .scenario-steps { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 580px) { .scenario-steps { grid-template-columns: 1fr; } }
+
+    .scenario-step {
+      background: var(--bg-subtle);
+      border: 1.5px solid var(--border);
+      padding: 1rem 1.05rem;
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.05rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 980px) { .problem-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 580px) { .problem-grid { grid-template-columns: 1fr; } }
+
+    .problem-card {
+      padding: 1.2rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .step-badge {
+      display: inline-block;
+      align-self: flex-start;
+      font-family: 'Martian Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.18rem 0.52rem;
+      background: var(--accent-soft);
+      color: var(--accent-main);
+      border: 1.5px solid var(--border);
+      text-transform: uppercase;
+    }
+    [data-theme="dark"] .step-badge { color: #DDD6FE; }
+
+    .problem-card h3 { font-size: 1.04rem; font-weight: 800; line-height: 1.3; }
+    .problem-card p { font-size: 0.9rem; color: var(--ink-muted); line-height: 1.66; }
+
+    /* Subsystem & Trade-Off Cards */
+    .module-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.4rem;
+    }
+
+    @media (max-width: 940px) { .module-grid { grid-template-columns: 1fr; } }
+
+    .module-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .module-card-head {
+      background: var(--bg-obsidian);
+      color: #FAF7F2;
+      padding: 0.65rem 1.1rem;
+      border-bottom: 2px solid var(--border);
+      font-family: 'Martian Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .module-card-body {
+      padding: 1.25rem 1.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      flex: 1;
+    }
+
+    .prose-block {
+      background: var(--bg-paper);
+      border: 1.5px solid var(--border);
+      padding: 0.88rem 1.02rem;
+      font-size: 0.91rem;
+      line-height: 1.68;
+      color: var(--ink);
+    }
+
+    .prose-block-tech {
+      background: var(--bg-subtle);
+      border: 1.5px solid var(--border);
+      padding: 0.88rem 1.02rem;
+      font-size: 0.88rem;
+      line-height: 1.68;
+      color: var(--ink-muted);
+    }
+
+    /* Architecture Canvas */
+    .arch-canvas-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      padding: 0.72rem 1rem;
+      background: var(--bg-subtle);
+      border: 2px solid var(--border);
+      border-bottom: none;
+    }
+
+    .arch-canvas-viewport {
+      background-color: #FFFFFF;
+      background-image: radial-gradient(rgba(24, 24, 27, 0.14) 1px, transparent 1px);
+      background-size: 18px 18px;
+      border: 2px solid #18181B;
+      box-shadow: 4px 4px 0px #18181B;
+      overflow-x: auto;
+      padding: 0.9rem;
+    }
+
+    .arch-canvas-svg {
+      display: block;
+      width: 100%;
+      min-width: 980px;
+      height: auto;
+      transition: width 0.22s ease, min-width 0.22s ease;
+    }
+
+    .arch-canvas-svg.zoom-125 {
+      width: 125%;
+      min-width: 1225px;
+    }
+
+    .svg-title { font-family: 'Caveat', cursive; }
+    .svg-mono { font-family: 'Martian Mono', monospace; }
+
+    .arch-node {
+      cursor: pointer;
+      transition: filter 0.15s ease;
+    }
+
+    .arch-node:hover {
+      filter: drop-shadow(3px 3px 0px #6D28D9);
+    }
+
+    .arch-node.selected .arch-stroke-main {
+      stroke: #6D28D9 !important;
+      stroke-width: 3.2px !important;
+    }
+
+    .arch-inspector {
+      margin-top: 1.05rem;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 1.15rem 1.3rem;
+    }
+
+    .arch-node-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.42rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .arch-node-pill {
+      font-family: 'Martian Mono', monospace;
+      font-size: 0.69rem;
+      font-weight: 700;
+      padding: 0.28rem 0.6rem;
+      border: 1.5px solid var(--border);
+      background: var(--bg-subtle);
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .arch-node-pill.active {
+      background: var(--accent-main);
+      color: #FFFFFF;
+    }
+
+    /* Interactive Demo Tabs */
+    .tab-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.78rem;
+      margin-bottom: 1.45rem;
+    }
+
+    @media (max-width: 960px) { .tab-bar { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 580px) { .tab-bar { grid-template-columns: 1fr; } }
+
+    .tab-btn {
+      text-align: left;
+      padding: 0.98rem 1.05rem;
+      background: var(--bg-card);
+      color: var(--ink);
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.12s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.34rem;
+    }
+
+    .tab-btn:hover { transform: translate(-1px, -1px); box-shadow: var(--shadow); }
+    .tab-btn.active {
+      background: var(--accent-main);
+      color: var(--accent-ink);
+      box-shadow: var(--shadow);
+      transform: translate(-1px, -1px);
+    }
+
+    .tab-btn-eyebrow { font-family: 'Martian Mono', monospace; font-size: 0.66rem; font-weight: 700; text-transform: uppercase; opacity: 0.88; }
+    .tab-btn-title { font-size: 0.93rem; font-weight: 800; letter-spacing: -0.01em; line-height: 1.25; }
+    .tab-btn-desc { font-size: 0.77rem; line-height: 1.45; opacity: 0.92; }
+    .tab-btn-metric { font-family: 'Martian Mono', monospace; font-size: 0.66rem; font-weight: 700; opacity: 0.9; margin-top: 0.15rem; }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .sim-header {
+      margin-bottom: 1.15rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .sim-title { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; }
+    .sim-desc { font-family: 'Newsreader', Georgia, serif; font-size: 1.08rem; color: var(--ink-muted); max-width: 860px; margin-top: 0.25rem; }
+
+    .grid-2 { display: grid; grid-template-columns: 1.05fr 1.15fr; gap: 1.3rem; align-items: start; }
+    .grid-equal { display: grid; grid-template-columns: 1fr 1fr; gap: 1.3rem; align-items: start; }
+    @media (max-width: 940px) { .grid-2, .grid-equal { grid-template-columns: 1fr; } }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-family: 'Martian Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.18rem 0.52rem;
+      border: 1.5px solid var(--border);
+      text-transform: uppercase;
+    }
+
+    .tag-accent { background: var(--accent-main); color: var(--accent-ink); }
+    .tag-soft { background: var(--accent-soft); color: var(--accent-main); }
+    [data-theme="dark"] .tag-soft { color: #DDD6FE; }
+    .tag-pass { background: var(--pass-soft); color: var(--pass); }
+    .tag-fail { background: var(--fail-soft); color: var(--fail); }
+    .tag-warn { background: var(--warn-soft); color: var(--warn); }
+
+    .control-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.83rem;
+      font-weight: 700;
+      margin-bottom: 0.38rem;
+    }
+
+    textarea, select, input[type="text"], input[type="number"] {
+      width: 100%;
+      font-family: 'Martian Mono', monospace;
+      font-size: 0.74rem;
+      padding: 0.62rem 0.76rem;
+      background: var(--bg-paper);
+      color: var(--ink);
+      border: 2px solid var(--border);
+      line-height: 1.52;
+    }
+    textarea:focus, select:focus, input[type="text"]:focus, input[type="number"]:focus {
+      outline: 2px solid var(--accent-main);
+      outline-offset: 1px;
+    }
+
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-subtle);
+      border: 2px solid var(--border);
+      border-bottom: none;
+      padding: 0.48rem 0.85rem;
+      font-family: 'Martian Mono', monospace;
+      font-size: 0.71rem;
+      font-weight: 700;
+    }
+
+    .code-box {
+      background: var(--bg-code);
+      color: var(--text-code);
+      border: 2px solid var(--border);
+      padding: 0.95rem 1.05rem;
+      font-family: 'Martian Mono', monospace;
+      font-size: 0.73rem;
+      line-height: 1.58;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 350px;
+      overflow-y: auto;
+    }
+
+    .verdict-banner {
+      border: 2px solid var(--border);
+      padding: 0.88rem 1.02rem;
+      margin-bottom: 0.9rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .verdict-allow { background: var(--pass-soft); }
+    .verdict-deny { background: var(--fail-soft); }
+    .verdict-warn { background: var(--warn-soft); }
+
+    .table-wrap { overflow-x: auto; border: 2px solid var(--border); background: var(--bg-card); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.79rem; }
+    th, td { padding: 0.58rem 0.72rem; text-align: left; border-bottom: 1.5px solid var(--border); }
+    th { background: var(--bg-subtle); font-family: 'Martian Mono', monospace; font-size: 0.67rem; text-transform: uppercase; font-weight: 700; }
+    tr:last-child td { border-bottom: none; }
+
+    .check-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.48rem;
+      margin: 0.55rem 0 0.95rem;
+    }
+    @media (max-width: 560px) { .check-grid { grid-template-columns: 1fr; } }
+
+    .check-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1.5px solid var(--border);
+      background: var(--bg-paper);
+      padding: 0.46rem 0.65rem;
+      font-family: 'Martian Mono', monospace;
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+
+    .timeline-item { border: 1.5px solid var(--border); background: var(--bg-paper); padding: 0.7rem 0.85rem; margin-bottom: 0.55rem; }
+
+    .bar-group { display: flex; flex-direction: column; gap: 0.65rem; margin: 0.8rem 0; }
+    .bar-row { display: flex; flex-direction: column; gap: 0.24rem; }
+    .bar-meta { display: flex; justify-content: space-between; font-family: 'Martian Mono', monospace; font-size: 0.72rem; font-weight: 600; }
+    .bar-track { width: 100%; height: 16px; background: var(--bg-subtle); border: 1.5px solid var(--border); overflow: hidden; }
+    .bar-fill { height: 100%; transition: width 0.28s ease; }
+    .bar-fill-accent { background: var(--accent-main); }
+    .bar-fill-pass { background: var(--pass); }
+
+    .footer {
+      margin-top: 2.8rem;
+      padding-top: 1.6rem;
+      border-top: 2px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.84rem;
+      color: var(--ink-muted);
+    }
+  </style>
+</head>
+<body>
+  <!-- Sticky Topbar -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="#top" class="brand">
+        <span class="brand-badge">RAI REGISTRY v1.0</span>
+        <span>ResponsibleAIRegistry</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary Navigation">
+        <a class="nav-pill" href="https://d3gk5qze5xyz7y.cloudfront.net" target="_blank" rel="noopener">DeskPilot ↗</a>
+        <a class="nav-pill" href="https://d13kangk4fqjbf.cloudfront.net" target="_blank" rel="noopener">AegisOps ↗</a>
+        <a class="btn btn-obsidian" href="https://github.com/ritwikareddykancharla/rai-conformance-hub" target="_blank" rel="noopener">★ GitHub Repo</a>
+        <button type="button" class="btn btn-secondary" id="themeToggleBtn" aria-label="Toggle color theme">
+          <span id="themeIcon">🌙</span>
+          <span id="themeLabel">Dark Mode</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Sticky Scroll-Spy Section TOC -->
+  <nav class="toc-bar" aria-label="Section Navigation">
+    <div class="container toc-inner" id="sectionTocLinks">
+      <span style="font-weight:700; color:var(--ink-muted);">SECTIONS:</span>
+      <a class="toc-link active" href="#problem" data-toc-sec="problem">01 · Problem</a>
+      <a class="toc-link" href="#architecture" data-toc-sec="architecture">02 · Architecture</a>
+      <a class="toc-link" href="#implementation" data-toc-sec="implementation">03 · Implementation</a>
+      <a class="toc-link" href="#tradeoffs" data-toc-sec="tradeoffs">04 · Trade-Offs</a>
+      <a class="toc-link" href="#studio" data-toc-sec="studio">05 · Live Demo</a>
+      <a class="toc-link" href="#benchmarks" data-toc-sec="benchmarks">06 · Benchmarks</a>
+    </div>
+  </nav>
+
+  <main class="container" id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-top-row">
+        <div class="eyebrow">AI Governance, Fairness &amp; Verified Knowledge · Built for Amazon Responsible AI &amp; CS AI</div>
+        <div class="runtime-pill" id="runtimePill">
+          <span class="pulse-dot"></span>
+          <span id="runtimeModeText">Live Interactive Demo · Powered by Amazon Bedrock</span>
+        </div>
+      </div>
+
+      <h1>ResponsibleAIRegistry: Fleet AI Discovery, Regulatory Risk Gate, Fairness Auditing &amp; Verified Policy Artifacts</h1>
+      <p class="hero-sub">
+        Unregistered models, biased screening thresholds, and conflicting regional help policies slip into production when teams rely on manual spreadsheets and raw text prompts. ResponsibleAIRegistry scans code for shadow models, blocks non-compliant launches, balances subgroup fairness, and distills customer policies into verified facts.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-accent" href="#studio">▶ Try the Live Demo ↓</a>
+        <a class="btn btn-secondary" href="#architecture">See the Architecture ↓</a>
+        <a class="btn btn-secondary" href="#benchmarks">View Benchmark Results ↓</a>
+      </div>
+
+      <div class="kpi-strip" id="heroKpiStrip"></div>
+
+      <div class="pipeline-bar" role="region" aria-label="ResponsibleAIRegistry Pipeline">
+        <div class="pipe-step"><span class="pipe-num">01</span><span>Scan Code AST &amp; CloudFormation for Shadow AI</span></div>
+        <span class="pipe-arrow">→</span>
+        <div class="pipe-step"><span class="pipe-num">02</span><span>Classify EU AI Act &amp; NIST RMF Risk Controls</span></div>
+        <span class="pipe-arrow">→</span>
+        <div class="pipe-step"><span class="pipe-num">03</span><span>Audit Subgroup Fairness &amp; Optimize Thresholds</span></div>
+        <span class="pipe-arrow">→</span>
+        <div class="pipe-step"><span class="pipe-num">04</span><span>Distill &amp; Verify Multi-Locale Policy Artifacts</span></div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 01 · PROBLEM                                                        -->
+    <!-- =================================================================== -->
+    <section id="problem" class="section">
+      <div class="section-header">
+        <div>
+          <span class="section-kicker">01 · Problem</span>
+          <h2 class="section-title">Problem</h2>
+          <p class="section-desc">
+            Operating thousands of AI services and multi-marketplace Customer Service workflows exposes compliance, fairness, and policy-consistency gaps that manual review questionnaires cannot catch in time.
+          </p>
+        </div>
+        <span class="tag tag-accent">Fleet Governance &amp; CS Knowledge</span>
+      </div>
+
+      <div class="overview-callout">
+        <h3>Overview</h3>
+        <p>
+          ResponsibleAIRegistry automates four governance and content gates before an AI workload or policy update reaches customers. First, Python AST and CloudFormation template scanners inventory foundation-model calls and reconcile them against a SQLite WAL AI Bill of Materials (AI-BOM) in <code>0.5 ms</code> median across <code>12</code> microservice repositories. Second, a hybrid policy engine and Amazon Bedrock classifier map systems to EU AI Act and NIST AI RMF tiers in <code>0.021 ms</code> deterministic gate time. Third, a statistical fairness engine evaluates <code>4,000</code> subgroup decisions and tunes per-group thresholds in <code>30.617 ms</code> median to satisfy the Four-Fifths (<code>0.80</code>) disparate impact rule. Fourth, a write-time compiler on Amazon Bedrock (<code>us.amazon.nova-lite-v1:0</code>) distills Customer Service SOPs across <code>en-US</code>, <code>es-US</code>, <code>de-DE</code>, and <code>ja-JP</code> into verified JSON Knowledge Artifacts with <code>100.0%</code> numeric precision and exception recall.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        <div class="card problem-card">
+          <span class="step-badge">01 · SHADOW AI DRIFT</span>
+          <h3>Unregistered Models &amp; Missing Guardrails</h3>
+          <p>Builder teams add <code>bedrock-runtime</code>, <code>sagemaker-runtime</code>, or external <code>openai</code> SDK calls directly in feature branches, or redeploy registered bots to EU regions without guardrails or S3 retention limits.</p>
+        </div>
+        <div class="card problem-card">
+          <span class="step-badge">02 · REGULATORY EXPOSURE</span>
+          <h3>Manual EU AI Act &amp; NIST RMF Triage</h3>
+          <p>High-risk hiring, credit underwriting, and medical triage workflows require Annex IV documentation, fairness audits, and Article 14 human override before CI/CD pipelines permit production release.</p>
+        </div>
+        <div class="card problem-card">
+          <span class="step-badge">03 · SUBGROUP DISPARITY</span>
+          <h3>Uniform Cutoff Scores Penalize Cohorts</h3>
+          <p>Applying a single <code>0.50</code> probability threshold across uncalibrated score distributions produces severe disparate impact (<code>0.5523</code> DI) and true-positive gaps (<code>0.3188</code>) across protected cohorts.</p>
+        </div>
+        <div class="card problem-card">
+          <span class="step-badge">04 · LOCALE CONTRADICTIONS</span>
+          <h3>Raw Prose SOPs Drift Across Marketplaces</h3>
+          <p>Stuffing verbose Customer Service prose into prompts wastes <code>50.0%</code> of policy tokens while hiding stale <code>es-US</code> translations (<code>45</code> vs <code>30</code> days) and invalid <code>7</code>-day <code>de-DE</code> withdrawal rules.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+          <div>
+            <span class="step-badge">END-TO-END TRACE</span>
+            <h3 style="font-size:1.15rem; font-weight:800; margin-top:0.35rem;">Lifecycle of a Pre-Launch Governance &amp; Multi-Locale Policy Check</h3>
+          </div>
+          <span class="tag tag-pass">Testable in Live Demo</span>
+        </div>
+        <div class="scenario-steps">
+          <div class="scenario-step">
+            <div class="mono" style="font-size:0.7rem; font-weight:700; color:var(--accent-main); margin-bottom:0.3rem;">1 · CODE &amp; IAC DISCOVERY</div>
+            <code>AIBomRegistry.scan_workload()</code> parses Python ASTs and CloudFormation JSON in <code>0.5 ms</code> median, catching unregistered OpenAI SDK calls and missing <code>AWS::Bedrock::Guardrail</code> bindings.
+          </div>
+          <div class="scenario-step">
+            <div class="mono" style="font-size:0.7rem; font-weight:700; color:var(--fail); margin-bottom:0.3rem;">2 · CONFORMANCE GATE</div>
+            <code>classify_ai_system_risk()</code> maps Annex III hiring and lending models to <code>HIGH_RISK</code> and returns <code>BLOCK_MISSING_CONTROLS</code> whenever human override or fairness evidence is absent.
+          </div>
+          <div class="scenario-step">
+            <div class="mono" style="font-size:0.7rem; font-weight:700; color:var(--warn); margin-bottom:0.3rem;">3 · THRESHOLD MITIGATION</div>
+            <code>run_fairness_audit()</code> lifts resume screening disparate impact from <code>0.5523</code> to <code>0.9069</code> and narrows <code>|ΔTPR|</code> from <code>0.3188</code> to <code>0.0437</code> while improving overall F1 by <code>+0.0312</code>.
+          </div>
+          <div class="scenario-step">
+            <div class="mono" style="font-size:0.7rem; font-weight:700; color:var(--pass); margin-bottom:0.3rem;">4 · VERIFIED CS ARTIFACTS</div>
+            Amazon Bedrock compiles localized SOPs into JSON Knowledge Artifacts, verifies <code>100.0%</code> numeric entailment, flags <code>5</code> cross-locale conflicts, and appends a SHA-256 SQLite WAL receipt.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 02 · ARCHITECTURE                                                   -->
+    <!-- =================================================================== -->
+    <section id="architecture" class="section">
+      <div class="section-header">
+        <div>
+          <span class="section-kicker">02 · Architecture</span>
+          <h2 class="section-title">Architecture</h2>
+          <p class="section-desc">
+            Static UI assets are served from a private Amazon S3 bucket through CloudFront Origin Access Control, while <code>/api/*</code> routes invoke Python 3.12 on AWS Lambda backed by SQLite WAL and Amazon Bedrock.
+          </p>
+        </div>
+      </div>
+
+      <div class="arch-canvas-toolbar">
+        <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+          <span class="mono" style="font-size:0.72rem; font-weight:700;">SYSTEM ARCHITECTURE · CLICK ANY COMPONENT TO INSPECT</span>
+          <span class="tag tag-accent" id="archZoomLabel">Zoom: 100%</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.45rem; flex-wrap:wrap;">
+          <button type="button" class="btn btn-accent" id="zoom100Btn" style="padding:0.32rem 0.65rem; font-size:0.76rem;">100%</button>
+          <button type="button" class="btn btn-secondary" id="zoom125Btn" style="padding:0.32rem 0.65rem; font-size:0.76rem;">125%</button>
+          <button type="button" class="btn btn-secondary" id="zoomResetBtn" style="padding:0.32rem 0.65rem; font-size:0.76rem;">↺ Reset</button>
+          <button type="button" class="btn btn-secondary" id="downloadArchSvgBtn" style="padding:0.32rem 0.65rem; font-size:0.76rem;">⬇ Export SVG</button>
+        </div>
+      </div>
+
+      <div class="arch-canvas-viewport" id="archViewport">
+        <svg id="raiArchSvg" class="arch-canvas-svg" viewBox="0 0 1220 730" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ResponsibleAIRegistry System Architecture Diagram">
+          <defs>
+            <pattern id="archDotGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1" fill="#D4D4D8" />
+            </pattern>
+          </defs>
+
+          <rect x="0" y="0" width="1220" height="730" fill="#FFFFFF" />
+          <rect x="0" y="0" width="1220" height="730" fill="url(#archDotGrid)" opacity="0.68" />
+
+          <!-- LAYER 1: EDGE & SERVERLESS API -->
+          <rect x="22" y="18" width="1176" height="146" fill="#FAFAFA" stroke="#71717A" stroke-width="1.6" stroke-dasharray="8 6" />
+          <text x="36" y="41" class="svg-title" font-size="21" font-weight="700" fill="#6D28D9">① Browser Console &amp; Serverless AWS Edge (CloudFront + Private S3 OAC + Python 3.12 Lambda)</text>
+
+          <g class="arch-node selected" data-arch-node="edge-browser" tabindex="0">
+            <rect x="38" y="55" width="202" height="84" fill="#EDE9FE" />
+            <rect class="arch-stroke-main" x="38" y="55" width="202" height="84" fill="none" stroke="#18181B" stroke-width="2.1" />
+            <text x="139" y="83" text-anchor="middle" class="svg-title" font-size="22" font-weight="700" fill="#18181B">Governance Console</text>
+            <text x="139" y="105" text-anchor="middle" class="svg-mono" font-size="10" font-weight="600" fill="#4C1D95">4 Live Conformance Studios</text>
+            <text x="139" y="123" text-anchor="middle" class="svg-mono" font-size="9.4" fill="#3F3F46">URL hash state · Dark mode</text>
+          </g>
+
+          <path d="M 242,96 L 298,96" fill="none" stroke="#18181B" stroke-width="2.1" stroke-dasharray="6 4" />
+          <path d="M 289,90 L 300,96 L 289,102" fill="none" stroke="#18181B" stroke-width="2.1" />
+          <text x="270" y="86" text-anchor="middle" class="svg-title" font-size="16" font-weight="700" fill="#18181B">HTTPS</text>
+
+          <g class="arch-node" data-arch-node="edge-cloudfront" tabindex="0">
+            <rect x="304" y="55" width="252" height="84" fill="#DBEAFE" />
+            <rect class="arch-stroke-main" x="304" y="55" width="252" height="84" fill="none" stroke="#18181B" stroke-width="2.1" />
+            <text x="430" y="83" text-anchor="middle" class="svg-title" font-size="22" font-weight="700" fill="#18181B">Amazon CloudFront</text>
+            <text x="430" y="105" text-anchor="middle" class="svg-mono" font-size="10" font-weight="600" fill="#1E3A8A">Single HTTPS Entry Point</text>
+            <text x="430" y="123" text-anchor="middle" class="svg-mono" font-size="9.4" fill="#3F3F46">UI -&gt; S3 OAC · /api/* -&gt; Lambda</text>
+          </g>
+
+          <path d="M 558,78 Q 596,66 634,66" fill="none" stroke="#18181B" stroke-width="2" stroke-dasharray="6 4" />
+          <path d="M 625,60 L 636,66 L 625,72" fill="none" stroke="#18181B" stroke-width="2" />
+          <text x="596" y="59" text-anchor="middle" class="svg-title" font-size="15" font-weight="700" fill="#065F46">Static UI</text>
+
+          <path d="M 558,114 Q 596,126 634,126" fill="none" stroke="#18181B" stroke-width="2" stroke-dasharray="6 4" />
+          <path d="M 625,120 L 636,126 L 625,132" fill="none" stroke="#18181B" stroke-width="2" />
+          <text x="596" y="143" text-anchor="middle" class="svg-title" font-size="15" font-weight="700" fill="#6D28D9">/api/*</text>
+
+          <g class="arch-node" data-arch-node="edge-s3" tabindex="0">
+            <rect x="640" y="39" width="272" height="51" fill="#DCFCE7" />
+            <rect class="arch-stroke-main" x="640" y="39" width="272" height="51" fill="none" stroke="#18181B" stroke-width="2" />
+            <text x="776" y="61" text-anchor="middle" class="svg-title" font-size="20" font-weight="700" fill="#18181B">Private S3 Bucket (OAC)</text>
+            <text x="776" y="79" text-anchor="middle" class="svg-mono" font-size="9.4" fill="#065F46">web/index.html · Public Access Off</text>
+          </g>
+
+          <g class="arch-node" data-arch-node="edge-lambda" tabindex="0">
+            <rect x="640" y="100" width="272" height="53" fill="#FEF3C7" />
+            <rect class="arch-stroke-main" x="640" y="100" width="272" height="53" fill="none" stroke="#18181B" stroke-width="2" />
+            <text x="776" y="123" text-anchor="middle" class="svg-title" font-size="20" font-weight="700" fill="#18181B">AWS Lambda API (Python 3.12)</text>
+            <text x="776" y="142" text-anchor="middle" class="svg-mono" font-size="9.4" fill="#92400E">rai_registry/server.py · 512 MB</text>
+          </g>
+
+          <g transform="rotate(-1.2 1055 95)">
+            <rect x="936" y="40" width="242" height="110" fill="#F5F3FF" stroke="#18181B" stroke-width="2" />
+            <text x="950" y="66" class="svg-title" font-size="19" font-weight="700" fill="#4C1D95">📌 $0.00 Idle Footprint</text>
+            <text x="950" y="89" class="svg-title" font-size="17" font-weight="600" fill="#18181B">• CloudFront + Private S3 OAC</text>
+            <text x="950" y="110" class="svg-title" font-size="17" font-weight="600" fill="#18181B">• On-demand Lambda + Nova Lite</text>
+            <text x="950" y="131" class="svg-title" font-size="17" font-weight="700" fill="#6D28D9">• 0.5 ms AST scan · 0.021 ms gate</text>
+          </g>
+
+          <path d="M 776,154 Q 770,176 612,194" fill="none" stroke="#18181B" stroke-width="2.1" stroke-dasharray="7 5" />
+          <path d="M 621,188 L 610,195 L 622,200" fill="none" stroke="#18181B" stroke-width="2.1" />
+          <text x="760" y="183" class="svg-title" font-size="16" font-weight="700" fill="#18181B">Route Governance &amp; Policy Requests</text>
+
+          <!-- LAYER 2: SHADOW-AI DISCOVERY & RISK CONFORMANCE -->
+          <rect x="22" y="196" width="1176" height="146" fill="#F5F3FF" stroke="#6D28D9" stroke-width="1.6" stroke-dasharray="8 6" />
+          <text x="36" y="219" class="svg-title" font-size="21" font-weight="700" fill="#6D28D9">② Fleet Discovery &amp; Regulatory Risk Gate (12 / 12 Repos Matched · 16 / 16 Risk Tiers Verified)</text>
+
+          <g class="arch-node" data-arch-node="gate-bom" tabindex="0">
+            <rect x="42" y="233" width="540" height="92" fill="#FFFFFF" />
+            <rect class="arch-stroke-main" x="42" y="233" width="540" height="92" fill="none" stroke="#18181B" stroke-width="2.1" />
+            <text x="312" y="261" text-anchor="middle" class="svg-title" font-size="22" font-weight="700" fill="#4C1D95">Shadow-AI Code AST &amp; IaC Scanner (AI-BOM)</text>
+            <text x="312" y="283" text-anchor="middle" class="svg-mono" font-size="9.8" font-weight="700" fill="#18181B">rai_registry/shadow_ai_bom.py · ast.NodeVisitor + CFN/CDK</text>
+            <text x="312" y="304" text-anchor="middle" class="svg-mono" font-size="9.3" fill="#3F3F46">Flags unregistered Bedrock/SageMaker/OpenAI calls, missing Guardrails &amp; TTLs</text>
+          </g>
+
+          <g class="arch-node" data-arch-node="gate-risk" tabindex="0">
+            <rect x="624" y="233" width="554" height="92" fill="#FEF3C7" />
+            <rect class="arch-stroke-main" x="624" y="233" width="554" height="92" fill="none" stroke="#18181B" stroke-width="2.1" />
+            <text x="901" y="261" text-anchor="middle" class="svg-title" font-size="22" font-weight="700" fill="#92400E">EU AI Act &amp; NIST AI RMF Conformance Gate</text>
+            <text x="901" y="283" text-anchor="middle" class="svg-mono" font-size="9.8" font-weight="700" fill="#18181B">rai_registry/risk_conformance.py · Prohibited / High / Limited / Minimal</text>
+            <text x="901" y="304" text-anchor="middle" class="svg-mono" font-size="9.3" fill="#78350F">Generates Model Cards, Art. 14 oversight &amp; PASS_RELEASE / BLOCK verdicts</text>
+          </g>
+
+          <path d="M 312,326 L 312,378" fill="none" stroke="#18181B" stroke-width="2" stroke-dasharray="6 4" />
+          <path d="M 306,370 L 312,380 L 318,370" fill="none" stroke="#18181B" stroke-width="2" />
+          <text x="324" y="360" class="svg-title" font-size="16" font-weight="700" fill="#065F46">High-Risk Subgroup Audit</text>
+
+          <path d="M 901,326 L 901,378" fill="none" stroke="#18181B" stroke-width="2" stroke-dasharray="6 4" />
+          <path d="M 895,370 L 901,380 L 907,370" fill="none" stroke="#18181B" stroke-width="2" />
+          <text x="913" y="360" class="svg-title" font-size="16" font-weight="700" fill="#1D4ED8">CS Knowledge Grounding</text>
+
+          <!-- LAYER 3: FAIRNESS ENGINE & SOP ARTIFACT DISTILLER -->
+          <rect x="22" y="380" width="1176" height="146" fill="#F0FDF4" stroke="#065F46" stroke-width="1.6" stroke-dasharray="8 6" />
+          <text x="36" y="404" class="svg-title" font-size="21" font-weight="700" fill="#065F46">③ Statistical Subgroup Fairness &amp; Multi-Locale CS Knowledge Artifact Distillation</text>
+
+          <g class="arch-node" data-arch-node="engine-fairness" tabindex="0">
+            <rect x="42" y="418" width="540" height="92" fill="#DCFCE7" />
+            <rect class="arch-stroke-main" x="42" y="418" width="540" height="92" fill="none" stroke="#18181B" stroke-width="2.1" />
+            <text x="312" y="446" text-anchor="middle" class="svg-title" font-size="22" font-weight="700" fill="#18181B">Subgroup Fairness &amp; Threshold Mitigator</text>
+            <text x="312" y="468" text-anchor="middle" class="svg-mono" font-size="9.8" font-weight="700" fill="#065F46">rai_registry/fairness_metrics.py · 4/5ths DI · |ΔTPR| · |ΔFPR| · ECE</text>
+            <text x="312" y="489" text-anchor="middle" class="svg-mono" font-size="9.3" fill="#3F3F46">4,000 rows in 30.6 ms · Lifts Resume DI 0.5523 -&gt; 0.9069 (+0.0312 F1)</text>
+          </g>
+
+          <g class="arch-node" data-arch-node="engine-distiller" tabindex="0">
+            <rect x="624" y="418" width="554" height="92" fill="#DBEAFE" />
+            <rect class="arch-stroke-main" x="624" y="418" width="554" height="92" fill="none" stroke="#18181B" stroke-width="2.1" />
+            <text x="901" y="446" text-anchor="middle" class="svg-title" font-size="22" font-weight="700" fill="#18181B">Write-Time SOP Artifact Distiller &amp; Locale Gate</text>
+            <text x="901" y="468" text-anchor="middle" class="svg-mono" font-size="9.8" font-weight="700" fill="#1E3A8A">rai_registry/sop_artifact_distiller.py · en-US / es-US / de-DE / ja-JP</text>
+            <text x="901" y="489" text-anchor="middle" class="svg-mono" font-size="9.3" fill="#3F3F46">100% numeric &amp; exception recall · Flags US drift &amp; EU 14d breaches</text>
+          </g>
+
+          <path d="M 312,510 L 312,568" fill="none" stroke="#6D28D9" stroke-width="2.1" stroke-dasharray="6 4" />
+          <path d="M 306,560 L 312,570 L 318,560" fill="none" stroke="#6D28D9" stroke-width="2.1" />
+          <text x="326" y="548" class="svg-title" font-size="16" font-weight="700" fill="#6D28D9">Converse API JSON Synthesis</text>
+
+          <path d="M 901,510 L 901,568" fill="none" stroke="#065F46" stroke-width="2.1" stroke-dasharray="6 4" />
+          <path d="M 895,560 L 901,570 L 907,560" fill="none" stroke="#065F46" stroke-width="2.1" />
+          <text x="915" y="548" class="svg-title" font-size="16" font-weight="700" fill="#065F46">Append SHA-256 Receipt</text>
+
+          <!-- LAYER 4: BEDROCK NOVA LITE & SQLITE WAL REGISTRY -->
+          <g class="arch-node" data-arch-node="bedrock-nova" tabindex="0">
+            <rect x="42" y="574" width="540" height="134" fill="#EDE9FE" />
+            <rect class="arch-stroke-main" x="42" y="574" width="540" height="134" fill="none" stroke="#18181B" stroke-width="2.2" />
+            <text x="312" y="604" text-anchor="middle" class="svg-title" font-size="23" font-weight="700" fill="#4C1D95">④ Amazon Bedrock Converse Engine</text>
+            <text x="312" y="629" text-anchor="middle" class="svg-mono" font-size="10" font-weight="700" fill="#18181B">us.amazon.nova-lite-v1:0 · Region us-west-2</text>
+            <text x="312" y="651" text-anchor="middle" class="svg-mono" font-size="9.4" fill="#4C1D95">Compiles SOP Knowledge Artifacts, risk rationales &amp; BOM fixes</text>
+            <rect x="92" y="666" width="440" height="28" fill="#FFFFFF" stroke="#18181B" stroke-width="1.6" />
+            <text x="312" y="684" text-anchor="middle" class="svg-mono" font-size="9.6" font-weight="700" fill="#6D28D9">⚡ 13 Live Calls Measured · 623.0 ms Median (322.3 tok)</text>
+          </g>
+
+          <path d="M 584,642 L 620,642" fill="none" stroke="#18181B" stroke-width="2" stroke-dasharray="5 4" />
+          <path d="M 613,636 L 622,642 L 613,648" fill="none" stroke="#18181B" stroke-width="2" />
+
+          <g class="arch-node" data-arch-node="sqlite-ledger" tabindex="0">
+            <rect x="624" y="574" width="554" height="134" fill="#FEF3C7" />
+            <rect class="arch-stroke-main" x="624" y="574" width="554" height="134" fill="none" stroke="#18181B" stroke-width="2.2" />
+            <text x="901" y="604" text-anchor="middle" class="svg-title" font-size="23" font-weight="700" fill="#92400E">④ SQLite WAL AI-BOM &amp; Audit Ledger</text>
+            <text x="901" y="629" text-anchor="middle" class="svg-mono" font-size="10" font-weight="700" fill="#18181B">approved_ai_bom + conformance_events (SHA-256)</text>
+            <text x="901" y="651" text-anchor="middle" class="svg-mono" font-size="9.4" fill="#78350F">Stores approved model baselines &amp; tamper-evident conformance receipts</text>
+            <rect x="681" y="666" width="440" height="28" fill="#DCFCE7" stroke="#18181B" stroke-width="1.6" />
+            <text x="901" y="684" text-anchor="middle" class="svg-mono" font-size="9.6" font-weight="700" fill="#065F46">✓ 34 Benchmark Receipts Verified in 0.66 ms</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Interactive Component Inspector -->
+      <div class="arch-inspector" id="archInspector">
+        <div class="arch-node-pills" id="archNodePills">
+          <button type="button" class="arch-node-pill active" data-arch-btn="edge-browser">1. Governance UI</button>
+          <button type="button" class="arch-node-pill" data-arch-btn="edge-cloudfront">2. CloudFront</button>
+          <button type="button" class="arch-node-pill" data-arch-btn="edge-s3">3. Private S3 OAC</button>
+          <button type="button" class="arch-node-pill" data-arch-btn="edge-lambda">4. Lambda API</button>
+          <button type="button" class="arch-node-pill" data-arch-btn="gate-bom">5. Shadow-AI Scanner</button>
+          <button type="button" class="arch-node-pill" data-arch-btn="gate-risk">6. EU AI Act Gate</button>
+          <button type="button" class="arch-node-pill" data-arch-btn="engine-fairness">7. Fairness Engine</button>
+          <button type="button" class="arch-node-pill" data-arch-btn="engine-distiller">8. SOP Distiller</button>
+          <button type="button" class="arch-node-pill" data-arch-btn="bedrock-nova">9. Bedrock Nova Lite</button>
+          <button type="button" class="arch-node-pill" data-arch-btn="sqlite-ledger">10. SQLite WAL Ledger</button>
+        </div>
+        <div id="archInspectorDetail"></div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 03 · IMPLEMENTATION                                                 -->
+    <!-- =================================================================== -->
+    <section id="implementation" class="section">
+      <div class="section-header">
+        <div>
+          <span class="section-kicker">03 · Implementation</span>
+          <h2 class="section-title">Implementation</h2>
+          <p class="section-desc">
+            Five Python 3.12 modules inside <code>rai_registry/</code> implement AST and CloudFormation discovery, regulatory risk gating, statistical fairness optimization, write-time SOP distillation, and unified local or Lambda serving.
+          </p>
+        </div>
+        <span class="tag tag-pass">12 / 12 Unit Tests Passing</span>
+      </div>
+
+      <div class="module-grid">
+        <div class="module-card">
+          <div class="module-card-head">
+            <span>01 · SHADOW-AI AST &amp; IAC SCANNER</span>
+            <span style="color:#C4B5FD;">rai_registry/shadow_ai_bom.py</span>
+          </div>
+          <div class="module-card-body">
+            <div class="prose-block">
+              Automatically inventories every foundation-model call, third-party AI SDK, system prompt hash, agent tool binding, and storage sink across code repositories and CloudFormation templates, flagging unregistered services and model or region drift.
+            </div>
+            <div class="prose-block-tech">
+              <code>_PythonAIBomVisitor(ast.NodeVisitor)</code> inspects <code>converse</code>, <code>invoke_model</code>, <code>invoke_endpoint</code>, and outbound SDKs (<code>openai</code>, <code>anthropic</code>, <code>api.deepseek.com</code>) while <code>_inspect_iac_template()</code> checks <code>AWS::Bedrock::Guardrail</code>, S3 <code>ExpirationInDays</code>, DynamoDB TTL, and wildcard IAM roles against <code>approved_ai_bom</code> in <code>0.5 ms</code> median (<code>0.878 ms</code> <code>p95</code>).
+            </div>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <div class="module-card-head">
+            <span>02 · EU AI ACT &amp; NIST RMF CONFORMANCE GATE</span>
+            <span style="color:#FDE68A;">rai_registry/risk_conformance.py</span>
+          </div>
+          <div class="module-card-body">
+            <div class="prose-block">
+              Maps AI workloads into <code>PROHIBITED</code>, <code>HIGH_RISK</code>, <code>TRANSPARENCY_LIMITED</code>, and <code>MINIMAL_RISK</code> tiers, builds structured Model Cards, and blocks CI/CD promotion whenever mandatory controls are missing.
+            </div>
+            <div class="prose-block-tech">
+              <code>classify_ai_system_risk()</code> runs deterministic policy rules in <code>0.021 ms</code> median alongside Amazon Bedrock semantic review, combining both through a max-severity lattice so High-Risk Annex III workloads (hiring, credit, medical triage, critical infrastructure, biometrics) achieve <code>100.0%</code> recall across all <code>16</code> golden benchmark systems.
+            </div>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <div class="module-card-head">
+            <span>03 · SUBGROUP FAIRNESS &amp; THRESHOLD MITIGATOR</span>
+            <span style="color:#6EE7B7;">rai_registry/fairness_metrics.py</span>
+          </div>
+          <div class="module-card-body">
+            <div class="prose-block">
+              Computes exact confusion matrices across demographic or operational cohorts, evaluates the EEOC Four-Fifths (<code>0.80</code>) Disparate Impact rule, Equal Opportunity (<code>|ΔTPR|</code>), Equalized Odds, and 10-bin Expected Calibration Error (<code>ECE</code>).
+            </div>
+            <div class="prose-card-tech prose-block-tech">
+              <code>optimize_group_thresholds()</code> searches cohort-specific decision cutoffs across <code>4,000</code> rows in <code>30.617 ms</code> median (<code>44.538 ms</code> <code>p95</code>), lifting resume-screening Disparate Impact from <code>0.5523</code> to <code>0.9069</code> and cutting <code>|ΔTPR|</code> from <code>0.3188</code> to <code>0.0437</code> across <code>3 / 3</code> benchmark scenarios.
+            </div>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <div class="module-card-head">
+            <span>04 · VERIFIED CS KNOWLEDGE ARTIFACT DISTILLER</span>
+            <span style="color:#93C5FD;">rai_registry/sop_artifact_distiller.py · server.py</span>
+          </div>
+          <div class="module-card-body">
+            <div class="prose-block">
+              Compiles multi-page Customer Service SOP prose into compact, schema-typed JSON Knowledge Artifacts at publish time and catches policy contradictions across <code>en-US</code>, <code>es-US</code>, <code>de-DE</code>, and <code>ja-JP</code> before agents serve stale rules.
+            </div>
+            <div class="prose-block-tech">
+              <code>distill_policy_bundle()</code> invokes Amazon Bedrock (<code>us.amazon.nova-lite-v1:0</code>, <code>623.0 ms</code> median across <code>13</code> calls), enforces <code>verify_artifact_entailment()</code> to reject ungrounded numbers (<code>100.0%</code> numeric precision and exception recall, <code>50.0%</code> token reduction), and flags <code>5</code> cross-locale conflicts.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 04 · TRADE-OFFS                                                     -->
+    <!-- =================================================================== -->
+    <section id="tradeoffs" class="section">
+      <div class="section-header">
+        <div>
+          <span class="section-kicker">04 · Trade-Offs</span>
+          <h2 class="section-title">Trade-Offs</h2>
+          <p class="section-desc">
+            Every architectural choice balances regulatory certainty, latency, and serverless cost efficiency against static-analysis limits or retraining complexity.
+          </p>
+        </div>
+        <span class="tag tag-soft">Design Decisions</span>
+      </div>
+
+      <div class="module-grid" style="margin-bottom:0;">
+        <div class="card">
+          <span class="step-badge">01 · STATIC AST + IAC VS RUNTIME EBPF</span>
+          <h3 style="font-size:1.08rem; font-weight:800; margin:0.45rem 0;">Pre-Merge CI Discovery Instead of Kernel Packet Inspection</h3>
+          <p style="font-size:0.92rem; color:var(--ink-muted); line-height:1.68;">
+            Parsing Python ASTs and CloudFormation JSON catches shadow SDK imports, hardcoded endpoints, and missing guardrails in <code>0.5 ms</code> median before deployment without agent overhead, with the trade-off that dynamically constructed URLs loaded from encrypted secrets at runtime still require VPC egress logs.
+          </p>
+        </div>
+
+        <div class="card">
+          <span class="step-badge">02 · MAX-SEVERITY LATTICE VS PURE LLM</span>
+          <h3 style="font-size:1.08rem; font-weight:800; margin:0.45rem 0;">Zero High-Risk False Negatives Over Permissive Triage</h3>
+          <p style="font-size:0.92rem; color:var(--ink-muted); line-height:1.68;">
+            Combining deterministic policy rules with Amazon Bedrock via <code>max_severity(det_tier, bedrock_tier)</code> guarantees that persuasive PRD wording cannot downgrade an Annex III hiring or credit system, trading a slightly higher Legal review queue rate on borderline text for <code>100.0%</code> High-Risk recall.
+          </p>
+        </div>
+
+        <div class="card">
+          <span class="step-badge">03 · POST-PROCESSING THRESHOLDS VS RETRAINING</span>
+          <h3 style="font-size:1.08rem; font-weight:800; margin:0.45rem 0;">30.6 ms Threshold Calibration Instead of Multi-Hour Retraining</h3>
+          <p style="font-size:0.92rem; color:var(--ink-muted); line-height:1.68;">
+            Optimizing cohort decision cutoffs restores Four-Fifths compliance (<code>0.5523 -&gt; 0.9069</code> DI) in <code>30.617 ms</code> on black-box model scores without touching upstream weights, though long-term feature drift still benefits from periodic in-processing sample reweighting.
+          </p>
+        </div>
+
+        <div class="card">
+          <span class="step-badge">04 · WRITE-TIME ARTIFACTS VS CHUNK RAG</span>
+          <h3 style="font-size:1.08rem; font-weight:800; margin:0.45rem 0;">Upfront Publish Compilation for Faster, Conflict-Free Serving</h3>
+          <p style="font-size:0.92rem; color:var(--ink-muted); line-height:1.68;">
+            Distilling SOPs into atomic Knowledge Artifacts adds a few seconds of Bedrock compilation when an author edits a policy, but cuts serving-time prompt tokens by <code>50.0%</code>, guarantees <code>100.0%</code> numeric grounding, and blocks cross-locale contradictions before customers ever see them.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 05 · LIVE DEMO                                                      -->
+    <!-- =================================================================== -->
+    <section id="studio" class="section">
+      <div class="section-header">
+        <div>
+          <span class="section-kicker">05 · Live Demo</span>
+          <h2 class="section-title">Live Demo</h2>
+          <p class="section-desc">
+            All four interactive studios call the live Python 3.12 <code>/api/*</code> backend and Amazon Bedrock (<code>us.amazon.nova-lite-v1:0</code>), recording every governance receipt in the SHA-256 SQLite WAL ledger.
+          </p>
+        </div>
+        <span class="tag tag-accent">Live AWS /api/* + Bedrock</span>
+      </div>
+
+      <div class="tab-bar" role="tablist" aria-label="ResponsibleAIRegistry Interactive Demo Tabs">
+        <button type="button" class="tab-btn active" data-tab="bom-discovery" role="tab" aria-selected="true" onclick="switchTab('bom-discovery')">
+          <span class="tab-btn-eyebrow">Tab 01 · Fleet Inventory</span>
+          <span class="tab-btn-title">1. Shadow-AI Code &amp; IaC Discovery (AI-BOM)</span>
+          <span class="tab-btn-desc">Scan Python ASTs &amp; CloudFormation templates against the central SQLite AI-BOM catalog</span>
+          <span class="tab-btn-metric" id="tabMetric1"></span>
+        </button>
+        <button type="button" class="tab-btn" data-tab="risk-gate" role="tab" aria-selected="false" onclick="switchTab('risk-gate')">
+          <span class="tab-btn-eyebrow">Tab 02 · Release Gate</span>
+          <span class="tab-btn-title">2. EU AI Act &amp; NIST RMF Conformance Gate</span>
+          <span class="tab-btn-desc">Classify AI risk tiers, generate Model Cards, and test CI/CD control enforcement</span>
+          <span class="tab-btn-metric" id="tabMetric2"></span>
+        </button>
+        <button type="button" class="tab-btn" data-tab="fairness-audit" role="tab" aria-selected="false" onclick="switchTab('fairness-audit')">
+          <span class="tab-btn-eyebrow">Tab 03 · Bias Mitigation</span>
+          <span class="tab-btn-title">3. Subgroup Fairness &amp; Threshold Mitigator</span>
+          <span class="tab-btn-desc">Audit 4,000 subgroup decisions for 4/5ths Disparate Impact, |ΔTPR|, ECE, and optimize cutoffs</span>
+          <span class="tab-btn-metric" id="tabMetric3"></span>
+        </button>
+        <button type="button" class="tab-btn" data-tab="sop-distiller" role="tab" aria-selected="false" onclick="switchTab('sop-distiller')">
+          <span class="tab-btn-eyebrow">Tab 04 · CS Content AI</span>
+          <span class="tab-btn-title">4. Verified CS Knowledge Artifact Distiller</span>
+          <span class="tab-btn-desc">Compile multi-locale SOPs on Bedrock, verify numeric entailment, and flag locale conflicts</span>
+          <span class="tab-btn-metric" id="tabMetric4"></span>
+        </button>
+      </div>
+
+      <!-- TAB 1: SHADOW-AI CODE & IAC DISCOVERY (AI-BOM) -->
+      <div id="panel-bom-discovery" class="tab-panel active" role="tabpanel">
+        <div class="sim-header">
+          <div>
+            <h3 class="sim-title">1. Shadow-AI Code &amp; IaC Discovery (AI-BOM)</h3>
+            <p class="sim-desc">Inspect any microservice repository or edit the Python source and CloudFormation JSON below to test real-time AST discovery, guardrail checks, and SQLite AI-BOM reconciliation.</p>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <button type="button" class="btn btn-secondary" id="btnScanFleetAll" onclick="runFullFleetScanLive()">📡 Scan All 12 Fleet Repos</button>
+            <button type="button" class="btn btn-secondary" onclick="resetLedgerLive()">↺ Reset Ledger</button>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div style="display:grid; grid-template-columns:1.3fr 0.7fr; gap:0.65rem; margin-bottom:0.8rem;">
+              <div>
+                <div class="control-label"><label for="bomRepoSelect">Microservice Repository Preset</label></div>
+                <select id="bomRepoSelect" onchange="loadSelectedBomRepo()"></select>
+              </div>
+              <div>
+                <div class="control-label"><label for="bomRegionInput">Deploy Region</label></div>
+                <input type="text" id="bomRegionInput" value="us-east-1" />
+              </div>
+            </div>
+
+            <div class="control-label">
+              <label for="bomServiceIdInput">Service ID (Checked Against SQLite <code>approved_ai_bom</code>)</label>
+            </div>
+            <input type="text" id="bomServiceIdInput" value="hr-fasttrack-resume-bot" style="margin-bottom:0.8rem;" />
+
+            <div class="control-label">
+              <label for="bomPythonInput">Application Python Source (Parsed via <code>ast.parse</code>)</label>
+            </div>
+            <textarea id="bomPythonInput" rows="8" style="margin-bottom:0.8rem;"></textarea>
+
+            <div class="control-label">
+              <label for="bomIacInput">CloudFormation / CDK Template JSON</label>
+            </div>
+            <textarea id="bomIacInput" rows="5" style="margin-bottom:0.8rem;"></textarea>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:0.65rem; flex-wrap:wrap;">
+              <label class="check-pill" style="margin:0;">
+                <input type="checkbox" id="bomUseBedrock" checked style="accent-color:var(--accent-main);" />
+                <span>Generate Bedrock Remediation Brief</span>
+              </label>
+              <button type="button" class="btn btn-accent" id="btnRunBomScan" onclick="runSingleBomScanLive()">🔍 Scan AST + IaC Workload</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div id="bomVerdictBanner" class="verdict-banner verdict-deny"></div>
+            <div id="bomFindingsList" style="margin-bottom:0.85rem;"></div>
+
+            <div class="code-header">
+              <span>Discovered AI-BOM Entry &amp; Bedrock Remediation</span>
+              <span id="bomTimingTag" style="color:var(--accent-main);">Ready</span>
+            </div>
+            <pre class="code-box" id="bomOutputConsole"></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: EU AI ACT & NIST RMF CONFORMANCE GATE -->
+      <div id="panel-risk-gate" class="tab-panel" role="tabpanel">
+        <div class="sim-header">
+          <div>
+            <h3 class="sim-title">2. EU AI Act &amp; NIST RMF Conformance Gate</h3>
+            <p class="sim-desc">Select an AI workload manifest and toggle technical governance controls on or off to see how EU AI Act risk tiers, Model Cards, and deterministic CI/CD release verdicts respond.</p>
+          </div>
+          <span class="tag tag-pass">Zero-False-Negative Safety Lattice</span>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="control-label"><label for="riskPresetSelect">AI System Workload Preset</label></div>
+            <select id="riskPresetSelect" onchange="loadSelectedRiskPreset()" style="margin-bottom:0.8rem;"></select>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.65rem; margin-bottom:0.8rem;">
+              <div>
+                <div class="control-label"><label for="riskDomainSelect">Primary Domain</label></div>
+                <select id="riskDomainSelect">
+                  <option value="employment_hiring">employment_hiring (Annex III §4a)</option>
+                  <option value="credit_underwriting">credit_underwriting (Annex III §5b)</option>
+                  <option value="medical_triage">medical_triage (Annex III §5a)</option>
+                  <option value="critical_infrastructure">critical_infrastructure (Annex III §2)</option>
+                  <option value="biometric_identification">biometric_identification (Annex III §1)</option>
+                  <option value="customer_support_chatbot">customer_support_chatbot (Art. 50)</option>
+                  <option value="warehouse_logistics">warehouse_logistics (Minimal Risk)</option>
+                  <option value="workplace_surveillance">workplace_surveillance (Art. 5 Check)</option>
+                </select>
+              </div>
+              <div>
+                <div class="control-label"><label for="riskJurisdictionsInput">Jurisdictions</label></div>
+                <input type="text" id="riskJurisdictionsInput" value="EU, US-CO, US-WA" />
+              </div>
+            </div>
+
+            <div class="control-label"><label for="riskDescInput">System Design &amp; Decision Authority Description</label></div>
+            <textarea id="riskDescInput" rows="3" style="margin-bottom:0.8rem;"></textarea>
+
+            <div class="control-label"><span>Verified Conformance Controls Attached to Release</span></div>
+            <div class="check-grid" id="riskControlsCheckboxes">
+              <label class="check-pill"><input type="checkbox" value="human_in_the_loop_override" /><span>human_in_the_loop_override</span></label>
+              <label class="check-pill"><input type="checkbox" value="subgroup_fairness_audit" /><span>subgroup_fairness_audit</span></label>
+              <label class="check-pill"><input type="checkbox" value="technical_documentation_annex_iv" /><span>technical_documentation_annex_iv</span></label>
+              <label class="check-pill"><input type="checkbox" value="immutable_decision_logging" /><span>immutable_decision_logging</span></label>
+              <label class="check-pill"><input type="checkbox" value="post_market_drift_monitor" /><span>post_market_drift_monitor</span></label>
+              <label class="check-pill"><input type="checkbox" value="bedrock_guardrail_attached" /><span>bedrock_guardrail_attached</span></label>
+              <label class="check-pill"><input type="checkbox" value="ai_interaction_disclosure_banner" /><span>ai_interaction_disclosure_banner</span></label>
+              <label class="check-pill"><input type="checkbox" value="synthetic_content_provenance_tag" /><span>synthetic_content_provenance_tag</span></label>
+              <label class="check-pill"><input type="checkbox" value="ai_bom_registration" /><span>ai_bom_registration</span></label>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:0.65rem; flex-wrap:wrap;">
+              <label class="check-pill" style="margin:0;">
+                <input type="checkbox" id="riskHumanGenai" style="accent-color:var(--accent-main);" />
+                <span>Human-Facing GenAI Output</span>
+              </label>
+              <button type="button" class="btn btn-accent" id="btnRunRiskGate" onclick="runRiskClassificationLive()">⚖️ Evaluate EU AI Act &amp; Release Gate</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div id="riskVerdictBanner" class="verdict-banner verdict-allow"></div>
+            <div id="riskSummaryCards" style="margin-bottom:0.85rem;"></div>
+
+            <div class="code-header">
+              <span>Generated Regulatory Model Card (JSON)</span>
+              <span id="riskTimingTag" style="color:var(--accent-main);">Amazon Bedrock</span>
+            </div>
+            <pre class="code-box" id="riskModelCardBox"></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: SUBGROUP FAIRNESS & THRESHOLD MITIGATOR -->
+      <div id="panel-fairness-audit" class="tab-panel" role="tabpanel">
+        <div class="sim-header">
+          <div>
+            <h3 class="sim-title">3. Subgroup Fairness &amp; Threshold Mitigator</h3>
+            <p class="sim-desc">Audit 4,000 subgroup prediction logs for Disparate Impact (EEOC Four-Fifths <code>0.80</code> rule), Equal Opportunity (<code>|ΔTPR|</code>), False Positive Parity (<code>|ΔFPR|</code>), and Expected Calibration Error (<code>ECE</code>).</p>
+          </div>
+          <span class="tag tag-pass">4,000 Decisions / Audit</span>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="control-label"><label for="fairScenarioSelect">High-Risk Decision Dataset (4,000 Rows)</label></div>
+            <select id="fairScenarioSelect" onchange="runFairnessAuditLive()" style="margin-bottom:0.85rem;">
+              <option value="resume_screening_v2">Automated Technical Resume Screener (4,000 Applicants)</option>
+              <option value="seller_credit_underwriting">Small-Merchant Working-Capital Loan Underwriter (4,000 Apps)</option>
+              <option value="customer_fraud_freeze">Buyer Return Legitimacy Classifier (4,000 Claims)</option>
+            </select>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:0.9rem;">
+              <div>
+                <div class="control-label"><label for="fairThresholdSelect">Uniform Baseline Cutoff (τ)</label></div>
+                <select id="fairThresholdSelect" onchange="runFairnessAuditLive()">
+                  <option value="0.45">τ = 0.45</option>
+                  <option value="0.50" selected>τ = 0.50 (Standard Default)</option>
+                  <option value="0.55">τ = 0.55</option>
+                  <option value="0.60">τ = 0.60 (Strict Cutoff)</option>
+                </select>
+              </div>
+              <div>
+                <div class="control-label"><span>Post-Processing Mitigator</span></div>
+                <label class="check-pill" style="padding:0.58rem 0.72rem;">
+                  <input type="checkbox" id="fairMitigateToggle" checked onchange="runFairnessAuditLive()" style="accent-color:var(--accent-main);" />
+                  <span>Optimize Per-Cohort Thresholds</span>
+                </label>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-accent" id="btnRunFairness" onclick="runFairnessAuditLive()" style="width:100%; justify-content:center; margin-bottom:1rem;">📊 Run 4,000-Row Fairness Audit &amp; Threshold Mitigator</button>
+
+            <div id="fairComparisonBars"></div>
+          </div>
+
+          <div class="card">
+            <div id="fairVerdictBanner" class="verdict-banner verdict-allow"></div>
+
+            <div class="control-label">
+              <span>Subgroup Confusion Matrices &amp; Thresholds</span>
+              <span class="mono" style="font-size:0.69rem;" id="fairTimingTag"></span>
+            </div>
+            <div class="table-wrap" style="margin-bottom:0.9rem;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Subgroup Cohort</th>
+                    <th>Cutoff τ</th>
+                    <th>TP / FP / TN / FN</th>
+                    <th>Sel Rate</th>
+                    <th>TPR / FPR</th>
+                    <th>DI vs Ref</th>
+                  </tr>
+                </thead>
+                <tbody id="fairSubgroupBody"></tbody>
+              </table>
+            </div>
+
+            <div class="code-header">
+              <span>Before vs. After Mitigation Summary</span>
+              <span class="mono">EEOC 4/5ths &gt;= 0.80</span>
+            </div>
+            <pre class="code-box" id="fairSummaryJsonBox" style="max-height:190px;"></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: VERIFIED CS KNOWLEDGE ARTIFACT DISTILLER -->
+      <div id="panel-sop-distiller" class="tab-panel" role="tabpanel">
+        <div class="sim-header">
+          <div>
+            <h3 class="sim-title">4. Verified CS Knowledge Artifact Distiller</h3>
+            <p class="sim-desc">Distill verbose Customer Service SOPs across <code>en-US</code>, <code>es-US</code>, <code>de-DE</code>, and <code>ja-JP</code> into atomic JSON Knowledge Artifacts via Amazon Bedrock, verifying 100% numeric entailment and catching cross-locale policy conflicts.</p>
+          </div>
+          <span class="tag tag-accent">en-US · es-US · de-DE · ja-JP</span>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div style="display:grid; grid-template-columns:1.25fr 0.75fr; gap:0.65rem; margin-bottom:0.8rem;">
+              <div>
+                <div class="control-label"><label for="sopFamilySelect">Customer Service Policy Family</label></div>
+                <select id="sopFamilySelect" onchange="loadSelectedSopBundle()">
+                  <option value="electronics_returns">Consumer Electronics &amp; Opened Software Return SOP</option>
+                  <option value="digital_subscriptions_refund">Annual Streaming &amp; SaaS Cancellation SOP</option>
+                  <option value="hazmat_battery_shipping">Damaged Lithium Battery &amp; Hazmat SOP</option>
+                </select>
+              </div>
+              <div>
+                <div class="control-label"><label for="sopLocaleSelect">Inspect / Edit Locale</label></div>
+                <select id="sopLocaleSelect" onchange="loadSelectedSopLocaleText()">
+                  <option value="en-US">en-US (US English)</option>
+                  <option value="es-US">es-US (US Spanish)</option>
+                  <option value="de-DE">de-DE (Germany EU)</option>
+                  <option value="ja-JP">ja-JP (Japan)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="control-label">
+              <label for="sopProseInput">Source SOP Prose (Editable for Live Entailment &amp; Conflict Testing)</label>
+            </div>
+            <textarea id="sopProseInput" rows="7" style="margin-bottom:0.8rem;"></textarea>
+
+            <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.85rem;">
+              <button type="button" class="btn btn-secondary" onclick="fixEsUsConflictPreset()" style="font-size:0.76rem; padding:0.38rem 0.7rem;">✨ Sync es-US to 30d + All Exceptions</button>
+              <button type="button" class="btn btn-danger" onclick="injectBadDe7DayPreset()" style="font-size:0.76rem; padding:0.38rem 0.7rem;">⚠ Test 7-Day de-DE Statutory Breach</button>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:0.65rem; flex-wrap:wrap;">
+              <label class="check-pill" style="margin:0;">
+                <input type="checkbox" id="sopUseBedrock" checked style="accent-color:var(--accent-main);" />
+                <span>Compile With Live Amazon Bedrock</span>
+              </label>
+              <button type="button" class="btn btn-accent" id="btnRunDistill" onclick="runSopDistillLive()">🧪 Distill &amp; Verify 4 Locales</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div id="sopVerdictBanner" class="verdict-banner verdict-deny"></div>
+            <div id="sopConflictsList" style="margin-bottom:0.85rem;"></div>
+
+            <div class="table-wrap" style="margin-bottom:0.85rem;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Locale</th>
+                    <th>Window</th>
+                    <th>Fee</th>
+                    <th>Exceptions</th>
+                    <th>Numeric / Span Verified</th>
+                    <th>Token Cut</th>
+                  </tr>
+                </thead>
+                <tbody id="sopArtifactsTableBody"></tbody>
+              </table>
+            </div>
+
+            <div class="code-header">
+              <span>Distilled Atomic Knowledge Artifacts (JSON)</span>
+              <span id="sopTimingTag" style="color:var(--accent-main);">Amazon Bedrock</span>
+            </div>
+            <pre class="code-box" id="sopJsonOutputBox" style="max-height:200px;"></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tamper-Evident SQLite WAL Conformance Receipt Strip -->
+      <div class="card" style="margin-top:1.35rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:0.6rem; flex-wrap:wrap; margin-bottom:0.7rem;">
+          <div>
+            <span class="mono" style="font-size:0.74rem; font-weight:700;">CENTRAL SQLITE WAL CONFORMANCE LEDGER (rai_conformance.db · SHA-256 HASH CHAIN)</span>
+          </div>
+          <span class="tag tag-pass" id="ledgerChainBadge">Chain Verified</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Receipt ID</th>
+                <th>Gate Module</th>
+                <th>Subject</th>
+                <th>Verdict</th>
+                <th>Latency</th>
+                <th>SHA-256 Chain Digest</th>
+              </tr>
+            </thead>
+            <tbody id="ledgerEventsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 06 · BENCHMARKS                                                     -->
+    <!-- =================================================================== -->
+    <section id="benchmarks" class="section" style="border-bottom:none; padding-bottom:0.5rem;">
+      <div class="section-header">
+        <div>
+          <span class="section-kicker">06 · Benchmarks</span>
+          <h2 class="section-title">Benchmarks</h2>
+          <p class="section-desc" id="benchSubHeader"></p>
+        </div>
+        <span class="tag tag-pass" id="benchTimestampTag"></span>
+      </div>
+
+      <div class="overview-callout" style="margin-bottom:1.35rem;">
+        <h3>Measured Results (<code>benchmarks/latest_results.json</code>)</h3>
+        <p>
+          Across <code>12</code> synthetic microservice repositories, AST and CloudFormation shadow-AI discovery achieved <code>12 / 12</code> (<code>100.0%</code>) accuracy in <code>0.5 ms</code> median (<code>0.878 ms</code> <code>p95</code>), flagging <code>5</code> unregistered shadow-AI repos and <code>3</code> drifted deployments. EU AI Act and NIST AI RMF risk tiering matched <code>16 / 16</code> (<code>100.0%</code>) golden systems with <code>100.0%</code> High-Risk and Prohibited recall in <code>0.021 ms</code> median (<code>0.033 ms</code> <code>p95</code>). Subgroup fairness post-processing across <code>3</code> <code>4,000</code>-row datasets (<code>12,000</code> decisions) completed in <code>30.617 ms</code> median (<code>44.538 ms</code> <code>p95</code>), lifting resume-screening Disparate Impact from <code>0.5523</code> to <code>0.9069</code> and improving F1 by <code>+0.0312</code>. Multi-locale SOP distillation across <code>12</code> localized policies achieved <code>100.0%</code> numeric precision, <code>100.0%</code> exception recall, <code>50.0%</code> prompt token reduction, and caught all <code>5</code> cross-locale conflicts, backed by <code>13</code> live Amazon Bedrock (<code>us.amazon.nova-lite-v1:0</code>) calls at <code>623.0 ms</code> median (<code>1,336.8 ms</code> <code>p95</code>, <code>322.3</code> mean tokens, <code>4,190</code> total tokens) and <code>34</code> SQLite WAL receipts verified in <code>0.66 ms</code>.
+        </p>
+      </div>
+
+      <div class="grid-equal" style="margin-bottom:1.3rem;">
+        <div class="card">
+          <div style="font-weight:800; font-size:1.04rem; margin-bottom:0.65rem;">Median Latency by Pipeline Stage (Log Scale)</div>
+          <div id="benchLatencySvgBox" style="border:1.5px solid var(--border); background:#FAF7F2; padding:0.5rem;"></div>
+          <div class="bar-group" id="benchMetricBars"></div>
+        </div>
+
+        <div class="card">
+          <div style="font-weight:800; font-size:1.04rem; margin-bottom:0.65rem;">4,000-Row Subgroup Fairness Mitigation (3 Scenarios)</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Scenario (4,000 Rows)</th>
+                  <th>DI Before -&gt; After</th>
+                  <th>|ΔTPR| Before -&gt; After</th>
+                  <th>F1 Delta</th>
+                  <th>Audit ms</th>
+                </tr>
+              </thead>
+              <tbody id="benchFairnessBody"></tbody>
+            </table>
+          </div>
+          <div style="font-weight:800; font-size:1.0rem; margin:0.95rem 0 0.55rem;">Multi-Locale CS SOP Distillation (4 Locales Each)</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Policy Family</th>
+                  <th>Precision / Recall</th>
+                  <th>Token Cut</th>
+                  <th>Conflicts</th>
+                </tr>
+              </thead>
+              <tbody id="benchSopBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-equal">
+        <div class="card">
+          <div style="font-weight:800; font-size:1.04rem; margin-bottom:0.65rem;">12-Repo Fleet Shadow-AI &amp; Drift Discovery</div>
+          <div class="table-wrap" style="max-height:360px; overflow-y:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Repository</th>
+                  <th>Region</th>
+                  <th>Detected Posture</th>
+                  <th>Findings</th>
+                  <th>Scan ms</th>
+                </tr>
+              </thead>
+              <tbody id="benchFleetBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="font-weight:800; font-size:1.04rem; margin-bottom:0.65rem;">Live Amazon Bedrock Converse Calls (<code>us.amazon.nova-lite-v1:0</code>)</div>
+          <div class="table-wrap" style="max-height:360px; overflow-y:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Call ID</th>
+                  <th>Module &amp; Target</th>
+                  <th>Verdict</th>
+                  <th>Bedrock ms</th>
+                  <th>Tokens</th>
+                </tr>
+              </thead>
+              <tbody id="benchBedrockBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>
+        <strong>ResponsibleAIRegistry</strong> · Fleet AI-BOM Discovery, EU AI Act Conformance, Fairness &amp; Verified CS Knowledge Artifacts · Built by Ritwika Reddy Kancharla
+      </div>
+      <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+        <a href="https://d3gk5qze5xyz7y.cloudfront.net" target="_blank" rel="noopener" style="color:var(--ink); font-weight:700;">DeskPilot ↗</a>
+        <a href="https://d13kangk4fqjbf.cloudfront.net" target="_blank" rel="noopener" style="color:var(--ink); font-weight:700;">AegisOps ↗</a>
+        <a href="https://github.com/ritwikareddykancharla/rai-conformance-hub" target="_blank" rel="noopener" style="color:var(--ink); font-weight:700;">GitHub Repository ↗</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      const VALID_TABS = ["bom-discovery", "risk-gate", "fairness-audit", "sop-distiller"];
+      let activeTab = "bom-discovery";
+      let activeTheme = "light";
+
+      // Exact 1:1 snapshot from `benchmarks/latest_results.json`
+      let MEASURED_BENCHMARKS = {
+        "service": "rai-conformance-hub",
+        "benchmark_timestamp_utc": "2026-11-25T23:12:20Z",
+        "environment": {
+          "python_version": "3.14.6",
+          "platform": "Darwin 25.6.0 (arm64)",
+          "bedrock_model": "us.amazon.nova-lite-v1:0",
+          "aws_region": "us-west-2",
+          "registry_store": "SQLite WAL AI-BOM + SHA-256 Conformance Hash Chain"
+        },
+        "headline_kpis": {
+          "fleet_repos_scanned": 12,
+          "fleet_repos_matched": 12,
+          "fleet_discovery_accuracy_pct": 100.0,
+          "shadow_ai_flagged": 5,
+          "drift_violations_flagged": 3,
+          "bom_scan_p50_ms": 0.5,
+          "bom_scan_p95_ms": 0.878,
+          "risk_systems_evaluated": 16,
+          "risk_systems_matched": 16,
+          "risk_classification_accuracy_pct": 100.0,
+          "high_risk_recall_pct": 100.0,
+          "risk_gate_p50_ms": 0.021,
+          "risk_gate_p95_ms": 0.033,
+          "fairness_rows_per_scenario": 4000,
+          "fairness_scenarios_total": 3,
+          "fairness_scenarios_mitigated": 3,
+          "resume_baseline_di": 0.5523,
+          "resume_mitigated_di": 0.9069,
+          "resume_baseline_delta_tpr": 0.3188,
+          "resume_mitigated_delta_tpr": 0.0437,
+          "resume_ece": 0.1718,
+          "resume_f1_delta": 0.0312,
+          "fairness_audit_p50_ms": 30.617,
+          "fairness_audit_p95_ms": 44.538,
+          "sop_locales_distilled": 12,
+          "sop_numeric_precision_pct": 100.0,
+          "sop_exception_recall_pct": 100.0,
+          "sop_mean_token_reduction_pct": 50.0,
+          "sop_cross_locale_conflicts_caught": 5,
+          "bedrock_calls_measured": 13,
+          "bedrock_latency_p50_ms": 623.0,
+          "bedrock_latency_p95_ms": 1336.8,
+          "bedrock_mean_tokens": 322.3,
+          "bedrock_total_tokens": 4190,
+          "sqlite_ledger_rows_verified": 34,
+          "sqlite_ledger_verify_ms": 0.66
+        },
+        "fleet_discovery_results": [
+          { "repo_id": "repo-01-cs-refund-assistant", "service_id": "cs-refund-assistant", "deploy_region": "us-west-2", "conformance_status": "COMPLIANT_REGISTERED", "findings_count": 0, "scan_ms": 0.516 },
+          { "repo_id": "repo-02-shadow-hr-screener", "service_id": "hr-fasttrack-resume-bot", "deploy_region": "us-east-1", "conformance_status": "SHADOW_UNREGISTERED", "findings_count": 4, "scan_ms": 0.517 },
+          { "repo_id": "repo-03-catalog-tagger-v2", "service_id": "catalog-tagger-v2", "deploy_region": "us-west-2", "conformance_status": "COMPLIANT_REGISTERED", "findings_count": 0, "scan_ms": 0.906 },
+          { "repo_id": "repo-04-shadow-marketing-copy-agent", "service_id": "growth-promo-writer-exp", "deploy_region": "us-west-2", "conformance_status": "SHADOW_UNREGISTERED", "findings_count": 3, "scan_ms": 0.484 },
+          { "repo_id": "repo-05-drifted-prime-eu-summarizer", "service_id": "prime-support-summarizer", "deploy_region": "eu-central-1", "conformance_status": "DRIFT_VIOLATION", "findings_count": 3, "scan_ms": 0.428 },
+          { "repo_id": "repo-06-seller-doc-ocr", "service_id": "seller-doc-ocr", "deploy_region": "us-west-2", "conformance_status": "COMPLIANT_REGISTERED", "findings_count": 0, "scan_ms": 0.717 },
+          { "repo_id": "repo-07-shadow-deepseek-code-helper", "service_id": "internal-sql-debugger-bot", "deploy_region": "us-west-2", "conformance_status": "SHADOW_UNREGISTERED", "findings_count": 2, "scan_ms": 0.415 },
+          { "repo_id": "repo-08-fulfillment-demand-forecaster", "service_id": "fulfillment-demand-forecaster", "deploy_region": "us-west-2", "conformance_status": "COMPLIANT_REGISTERED", "findings_count": 0, "scan_ms": 0.856 },
+          { "repo_id": "repo-09-shadow-vendor-negotiation-bot", "service_id": "vendor-rebate-negotiator", "deploy_region": "us-east-1", "conformance_status": "SHADOW_UNREGISTERED", "findings_count": 3, "scan_ms": 0.58 },
+          { "repo_id": "repo-10-drifted-seller-underwriter-model", "service_id": "seller-lending-underwriter", "deploy_region": "us-west-2", "conformance_status": "DRIFT_VIOLATION", "findings_count": 2, "scan_ms": 0.435 },
+          { "repo_id": "repo-11-shadow-returns-fraud-freeze", "service_id": "buyer-abuse-auto-freeze", "deploy_region": "us-west-2", "conformance_status": "SHADOW_UNREGISTERED", "findings_count": 3, "scan_ms": 0.47 },
+          { "repo_id": "repo-12-drifted-cs-refund-unguarded", "service_id": "cs-refund-assistant", "deploy_region": "us-west-2", "conformance_status": "DRIFT_VIOLATION", "findings_count": 2, "scan_ms": 0.401 }
+        ],
+        "fairness_mitigation_results": [
+          { "scenario_id": "resume_screening_v2", "title": "Technical Resume Screener", "baseline_di": 0.5523, "mitigated_di": 0.9069, "baseline_delta_tpr": 0.3188, "mitigated_delta_tpr": 0.0437, "f1_delta": 0.0312, "audit_ms": 46.085 },
+          { "scenario_id": "seller_credit_underwriting", "title": "Seller Credit Underwriter", "baseline_di": 0.6598, "mitigated_di": 0.9454, "baseline_delta_tpr": 0.2426, "mitigated_delta_tpr": 0.0416, "f1_delta": 0.0225, "audit_ms": 30.617 },
+          { "scenario_id": "customer_fraud_freeze", "title": "Buyer Return Legitimacy", "baseline_di": 0.6335, "mitigated_di": 0.9416, "baseline_delta_tpr": 0.3011, "mitigated_delta_tpr": 0.0451, "f1_delta": 0.0427, "audit_ms": 26.953 }
+        ],
+        "sop_distillation_results": [
+          { "policy_family": "electronics_returns", "numeric_precision_pct": 100.0, "exception_recall_pct": 100.0, "prompt_token_reduction_pct": 58.1, "conflicts_detected": 3 },
+          { "policy_family": "digital_subscriptions_refund", "numeric_precision_pct": 100.0, "exception_recall_pct": 100.0, "prompt_token_reduction_pct": 46.8, "conflicts_detected": 1 },
+          { "policy_family": "hazmat_battery_shipping", "numeric_precision_pct": 100.0, "exception_recall_pct": 100.0, "prompt_token_reduction_pct": 45.1, "conflicts_detected": 1 }
+        ],
+        "live_bedrock_calls": [
+          { "call_id": "BR-BOM-02", "module": "shadow_ai_bom", "target": "repo-02-shadow-hr-screener", "verdict": "SHADOW_UNREGISTERED", "latency_ms": 1264.0, "tokens": 486 },
+          { "call_id": "BR-BOM-05", "module": "shadow_ai_bom", "target": "repo-05-drifted-prime-eu-summarizer", "verdict": "DRIFT_VIOLATION", "latency_ms": 1446.0, "tokens": 442 },
+          { "call_id": "BR-BOM-07", "module": "shadow_ai_bom", "target": "repo-07-shadow-deepseek-code-helper", "verdict": "SHADOW_UNREGISTERED", "latency_ms": 1155.0, "tokens": 398 },
+          { "call_id": "BR-RISK-01", "module": "risk_conformance", "target": "sys-01-workplace-emotion-cam", "verdict": "PROHIBITED:BLOCK_PROHIBITED_USE", "latency_ms": 623.0, "tokens": 266 },
+          { "call_id": "BR-RISK-04", "module": "risk_conformance", "target": "sys-04-candidate-resume-ranker-compliant", "verdict": "HIGH_RISK:PASS_RELEASE", "latency_ms": 522.0, "tokens": 259 },
+          { "call_id": "BR-RISK-07", "module": "risk_conformance", "target": "sys-07-clinic-triage-missing-docs", "verdict": "HIGH_RISK:BLOCK_MISSING_CONTROLS", "latency_ms": 617.0, "tokens": 260 },
+          { "call_id": "BR-RISK-10", "module": "risk_conformance", "target": "sys-10-cs-refund-chatbot-compliant", "verdict": "TRANSPARENCY_LIMITED:PASS_RELEASE", "latency_ms": 836.0, "tokens": 265 },
+          { "call_id": "BR-SOP-ELECTR", "module": "sop_artifact_distiller", "target": "electronics_returns (en-US + es-US)", "verdict": "BLOCK_LOCALE_CONFLICT", "latency_ms": 557.0, "tokens": 332 },
+          { "call_id": "BR-SOP-DIGITA", "module": "sop_artifact_distiller", "target": "digital_subscriptions_refund (en-US + es-US)", "verdict": "BLOCK_LOCALE_CONFLICT", "latency_ms": 660.5, "tokens": 301 },
+          { "call_id": "BR-SOP-HAZMAT", "module": "sop_artifact_distiller", "target": "hazmat_battery_shipping (en-US + es-US)", "verdict": "BLOCK_LOCALE_CONFLICT", "latency_ms": 593.0, "tokens": 274 }
+        ]
+      };
+
+      const ARCH_NODE_DETAILS = {
+        "edge-browser": {
+          plane: "Layer ① · Browser Console & Serverless Edge",
+          title: "ResponsibleAIRegistry Interactive Console",
+          module: "web/index.html",
+          summary: "Single-page governance console with four interactive studios for AST/IaC shadow-AI discovery, EU AI Act conformance gating, 4,000-row subgroup fairness mitigation, and multi-locale SOP distillation. Uses URL hash state for tab and theme persistence.",
+          metric: "4 Live Studios · URL Hash State"
+        },
+        "edge-cloudfront": {
+          plane: "Layer ① · Browser Console & Serverless Edge",
+          title: "Amazon CloudFront HTTPS Router",
+          module: "infra/deploy_cloudfront.sh · Origin Access Control",
+          summary: "Serves static UI assets from private S3 and routes /api/* calls to AWS Lambda on the same HTTPS domain with caching disabled on API paths.",
+          metric: "TLS 1.3 · Unified /api/* Routing"
+        },
+        "edge-s3": {
+          plane: "Layer ① · Browser Console & Serverless Edge",
+          title: "Private Amazon S3 Bucket",
+          module: "s3://rairegistry-web-796330847946-us-west-2",
+          summary: "Holds static web assets with all four BlockPublicAccess settings enabled, permitting reads solely from the CloudFront distribution via SigV4 OAC.",
+          metric: "Public Access Blocked · $0.00 Idle"
+        },
+        "edge-lambda": {
+          plane: "Layer ① · Browser Console & Serverless Edge",
+          title: "AWS Lambda Python 3.12 API Origin",
+          module: "rai_registry/server.py :: lambda_handler & route_api_request",
+          summary: "Executes /api/health, /api/bom/discover, /api/risk/classify, /api/fairness/audit, /api/artifacts/distill, /api/benchmarks, and /api/reset on demand.",
+          metric: "Python 3.12 · 512 MB · 30s Timeout"
+        },
+        "gate-bom": {
+          plane: "Layer ② · Fleet Discovery & Risk Conformance",
+          title: "Shadow-AI Code AST & CloudFormation Scanner",
+          module: "rai_registry/shadow_ai_bom.py :: AIBomRegistry.scan_workload",
+          summary: "Walks Python ASTs and CloudFormation/CDK resources to catalog Bedrock, SageMaker, and external SDK calls, system prompt hashes, agent tools, guardrails, and S3/DynamoDB retention sinks against SQLite approved_ai_bom.",
+          metric: "12 / 12 Repos Matched · 0.5 ms Median"
+        },
+        "gate-risk": {
+          plane: "Layer ② · Fleet Discovery & Risk Conformance",
+          title: "EU AI Act & NIST AI RMF Conformance Gate",
+          module: "rai_registry/risk_conformance.py :: classify_ai_system_risk",
+          summary: "Classifies AI systems into PROHIBITED, HIGH_RISK, TRANSPARENCY_LIMITED, and MINIMAL_RISK, generates Annex IV Model Cards, and enforces deterministic PASS_RELEASE or BLOCK_MISSING_CONTROLS verdicts.",
+          metric: "16 / 16 Matched · 0.021 ms Median"
+        },
+        "engine-fairness": {
+          plane: "Layer ③ · Statistical Fairness & Knowledge Plane",
+          title: "Subgroup Fairness & Threshold Post-Processor",
+          module: "rai_registry/fairness_metrics.py :: run_fairness_audit",
+          summary: "Computes subgroup confusion matrices, EEOC 4/5ths Disparate Impact, |ΔTPR|, |ΔFPR|, and 10-bin ECE across 4,000 rows, optimizing group thresholds to restore compliance with minimal F1 trade-off.",
+          metric: "DI 0.5523 -> 0.9069 · 30.617 ms Median"
+        },
+        "engine-distiller": {
+          plane: "Layer ③ · Statistical Fairness & Knowledge Plane",
+          title: "Write-Time SOP Artifact Distiller & Locale Conflict Detector",
+          module: "rai_registry/sop_artifact_distiller.py :: distill_policy_bundle",
+          summary: "Compiles Customer Service SOP prose into structured JSON Knowledge Artifacts across en-US, es-US, de-DE, and ja-JP, verifying 100% numeric entailment and catching stale translations or EU 14-day breaches.",
+          metric: "100% Precision & Recall · 5 Conflicts Caught"
+        },
+        "bedrock-nova": {
+          plane: "Layer ④ · Foundation Model & Audit Storage",
+          title: "Amazon Bedrock Converse Foundation Model",
+          module: "rai_registry/bedrock_client.py :: invoke_bedrock_json",
+          summary: "Invokes us.amazon.nova-lite-v1:0 in us-west-2 for SOP Knowledge Artifact synthesis, regulatory risk rationales, and shadow-AI remediation plans, guarded by deterministic numeric and lattice verifiers.",
+          metric: "13 Calls · 623.0 ms Median · 322.3 Tokens"
+        },
+        "sqlite-ledger": {
+          plane: "Layer ④ · Foundation Model & Audit Storage",
+          title: "SQLite WAL AI-BOM & SHA-256 Conformance Ledger",
+          module: "rai_registry/bedrock_client.py :: GovernanceAuditLedger",
+          summary: "Maintains the approved enterprise AI-BOM catalog and appends every discovery scan, risk check, fairness certificate, and SOP distillation verdict to a SHA-256 hash-chained SQLite WAL table.",
+          metric: "34 Chained Receipts · 0.66 ms Verify"
+        }
+      };
+
+      const state = {
+        fleetRepos: [
+          {
+            repo_id: "repo-02-shadow-hr-screener",
+            service_id: "hr-fasttrack-resume-bot",
+            title: "Unregistered HR Resume Ranker Calling External OpenAI API",
+            deploy_region: "us-east-1",
+            python_code: 'import openai\nimport boto3\n\nSYSTEM_PROMPT = "Score job applicants from 1 to 100 and auto-reject candidates below 65 without recruiter review."\nTOOLS = [{"name": "auto_reject_applicant_ats"}, {"name": "write_candidate_dossier"}]\n\ndef screen_resume(raw_resume_text: str):\n    client = openai.OpenAI()\n    out = client.chat.completions.create(\n        model="gpt-4o-mini",\n        messages=[{"role": "system", "content": SYSTEM_PROMPT}, {"role": "user", "content": raw_resume_text}],\n    )\n    s3 = boto3.client("s3")\n    s3.put_object(Bucket="hr-raw-resumes-archive", Key="unredacted/candidate.txt", Body=raw_resume_text.encode())\n    return out\n',
+            iac_template: { Resources: { RawResumeBucket: { Type: "AWS::S3::Bucket", Properties: { BucketName: "hr-raw-resumes-archive" } } } }
+          }
+        ],
+        riskPresets: [
+          {
+            system_id: "sys-05-candidate-resume-ranker-missing-hitl",
+            title: "Automated Warehouse Applicant Auto-Rejector (Missing Fairness & Override)",
+            domain: "employment_hiring",
+            description: "Automatically rejects seasonal warehouse applicants without recruiter review or disparate impact testing.",
+            jurisdictions: ["EU", "US"],
+            human_facing_genai: false,
+            prohibited_signals: [],
+            controls_present: ["immutable_decision_logging"]
+          }
+        ],
+        sopBundles: {
+          electronics_returns: {
+            "en-US": "Amazon US Customer Service Standard Operating Procedure (SOP-CS-RET-EN-US-2026.4). Customers in the US marketplace may return unopened or defective consumer electronics within 30 days of delivery for a full 100% refund with a 0% restocking fee, provided the original factory serial number matches the fulfillment scan. Exceptions that agents and automated workflows must enforce: (1) opened physical software media and scratched digital activation cards are non-refundable and only eligible for identical title exchange within 30 days; (2) standalone lithium-ion power banks exceeding 100 Wh cannot use standard prepaid drop-off labels and require hazmat ground carrier scheduling; (3) high-value electronics returned with a missing or altered serial number must be placed in a 7-day inspection hold before any refund is released. Agents must disclose that refund settlement takes up to 5 business days.",
+            "es-US": "Procedimiento Operativo de Servicio al Cliente EE. UU. en Espanol (SOP-CS-RET-ES-US-2025.1). Los clientes en el mercado de EE. UU. pueden devolver articulos electronicos dentro de 45 dias posteriores a la entrega con una tarifa de reposicion del 0%. Excepcion unica registrada: (1) el software fisico abierto y las tarjetas digitales raspadas no son reembolsables. Nota: El agente debe informar al cliente que el reembolso bancario tarda hasta 5 dias habiles.",
+            "de-DE": "Amazon Deutschland Kundenservice Richtlinie (SOP-CS-RET-DE-DE-2026.4, EU-Verbraucherrechterichtlinie 2011/83/EU). Kunden auf dem deutschen Marktplatz haben ein gesetzliches Widerrufsrecht von 14 Tagen ab Erhalt der Ware bei 0% Wiedereinlagerungsgebuehr.",
+            "ja-JP": "Amazon.co.jp カスタマーサービス標準手順書 (SOP-CS-RET-JA-JP-2026.3). 日本マーケットプレイスの顧客は商品到着後 30 日以内に家電製品を返品できます。顧客都合で開封済みの良品は商品代金の 50% の返品手数料が適用されます。"
+          }
+        },
+        auditEvents: []
+      };
+
+      function esc(v) {
+        return String(v == null ? "" : v)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      // Architecture SVG Inspector, Zoom & Export
+      function selectArchNode(nodeId) {
+        const info = ARCH_NODE_DETAILS[nodeId] || ARCH_NODE_DETAILS["gate-bom"];
+        document.querySelectorAll("#raiArchSvg .arch-node").forEach(function (el) {
+          el.classList.toggle("selected", el.getAttribute("data-arch-node") === nodeId);
+        });
+        document.querySelectorAll("#archNodePills [data-arch-btn]").forEach(function (btn) {
+          btn.classList.toggle("active", btn.getAttribute("data-arch-btn") === nodeId);
+        });
+        const detailBox = document.getElementById("archInspectorDetail");
+        if (detailBox) {
+          detailBox.innerHTML =
+            '<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.75rem; flex-wrap:wrap; margin-bottom:0.45rem;">' +
+              '<div>' +
+                '<span class="tag tag-accent" style="margin-bottom:0.35rem;">' + esc(info.plane) + '</span>' +
+                '<h3 style="font-size:1.06rem; font-weight:800;">' + esc(info.title) + '</h3>' +
+              '</div>' +
+              '<span class="tag tag-pass">' + esc(info.metric) + '</span>' +
+            '</div>' +
+            '<div class="mono" style="font-size:0.73rem; color:var(--accent-main); margin-bottom:0.45rem;">Module / Resource: <code>' + esc(info.module) + '</code></div>' +
+            '<p style="font-size:0.91rem; color:var(--ink-muted); line-height:1.65;">' + esc(info.summary) + '</p>';
+        }
+      }
+
+      document.querySelectorAll("#raiArchSvg .arch-node").forEach(function (el) {
+        el.addEventListener("click", function () { selectArchNode(el.getAttribute("data-arch-node")); });
+        el.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            selectArchNode(el.getAttribute("data-arch-node"));
+          }
+        });
+      });
+      document.querySelectorAll("#archNodePills [data-arch-btn]").forEach(function (btn) {
+        btn.addEventListener("click", function () { selectArchNode(btn.getAttribute("data-arch-btn")); });
+      });
+
+      const archSvg = document.getElementById("raiArchSvg");
+      const archViewport = document.getElementById("archViewport");
+      const zoom100Btn = document.getElementById("zoom100Btn");
+      const zoom125Btn = document.getElementById("zoom125Btn");
+      const zoomResetBtn = document.getElementById("zoomResetBtn");
+      const archZoomLabel = document.getElementById("archZoomLabel");
+
+      function setArchZoom(mode) {
+        if (!archSvg) return;
+        const is125 = mode === "125";
+        archSvg.classList.toggle("zoom-125", is125);
+        archZoomLabel.textContent = is125 ? "Zoom: 125%" : "Zoom: 100%";
+        zoom100Btn.className = is125 ? "btn btn-secondary" : "btn btn-accent";
+        zoom125Btn.className = is125 ? "btn btn-accent" : "btn btn-secondary";
+        if (mode === "reset" && archViewport) {
+          archViewport.scrollTo({ left: 0, behavior: "smooth" });
+          selectArchNode("gate-bom");
+        }
+      }
+      zoom100Btn.addEventListener("click", function () { setArchZoom("100"); });
+      zoom125Btn.addEventListener("click", function () { setArchZoom("125"); });
+      zoomResetBtn.addEventListener("click", function () { setArchZoom("reset"); });
+
+      document.getElementById("downloadArchSvgBtn").addEventListener("click", function () {
+        const xml = '<?xml version="1.0" encoding="UTF-8"?>\n' + archSvg.outerHTML;
+        const blob = new Blob([xml], { type: "image/svg+xml;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "rai-registry-architecture.svg";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      });
+
+      // Scroll-Spy Section TOC
+      if ("IntersectionObserver" in window) {
+        const secObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              const id = entry.target.id;
+              document.querySelectorAll("#sectionTocLinks .toc-link").forEach(function (link) {
+                link.classList.toggle("active", link.getAttribute("data-toc-sec") === id);
+              });
+            }
+          });
+        }, { rootMargin: "-20% 0px -65% 0px" });
+        ["problem", "architecture", "implementation", "tradeoffs", "studio", "benchmarks"].forEach(function (id) {
+          const el = document.getElementById(id);
+          if (el) secObserver.observe(el);
+        });
+      }
+
+      // URL hash state for tab & dark mode persistence
+      function parseHashState() {
+        const raw = (window.location.hash || "").replace(/^#/, "");
+        if (!raw) return;
+        raw.split("&").forEach(function (part) {
+          if (VALID_TABS.includes(part)) activeTab = part;
+          else if (part === "theme=dark" || part === "dark") activeTheme = "dark";
+          else if (part === "theme=light") activeTheme = "light";
+        });
+      }
+
+      function syncHashState() {
+        const hash = activeTheme === "dark" ? activeTab + "&theme=dark" : activeTab;
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState(null, "", "#" + hash);
+        } else {
+          window.location.hash = hash;
+        }
+      }
+
+      function applyTheme(theme) {
+        activeTheme = theme;
+        document.documentElement.setAttribute("data-theme", theme);
+        document.getElementById("themeIcon").textContent = theme === "dark" ? "☀️" : "🌙";
+        document.getElementById("themeLabel").textContent = theme === "dark" ? "Light Mode" : "Dark Mode";
+        syncHashState();
+      }
+
+      document.getElementById("themeToggleBtn").addEventListener("click", function () {
+        applyTheme(activeTheme === "dark" ? "light" : "dark");
+      });
+
+      window.switchTab = function (tabId) {
+        if (!VALID_TABS.includes(tabId)) return;
+        activeTab = tabId;
+        document.querySelectorAll(".tab-btn").forEach(function (btn) {
+          const match = btn.getAttribute("data-tab") === tabId;
+          btn.classList.toggle("active", match);
+          btn.setAttribute("aria-selected", match ? "true" : "false");
+        });
+        document.querySelectorAll(".tab-panel").forEach(function (panel) {
+          panel.classList.toggle("active", panel.id === "panel-" + tabId);
+        });
+        syncHashState();
+      };
+
+      async function apiGet(path) {
+        const res = await fetch(path, { headers: { Accept: "application/json" } });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      }
+
+      async function apiPost(path, body) {
+        const res = await fetch(path, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(body || {})
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "HTTP " + res.status);
+        return data;
+      }
+
+      function renderMeasuredKpisAndBenchmarks() {
+        const k = MEASURED_BENCHMARKS.headline_kpis;
+
+        document.getElementById("heroKpiStrip").innerHTML =
+          '<div class="card kpi-card">' +
+            '<div class="kpi-val">' + k.fleet_repos_matched + ' / ' + k.fleet_repos_scanned + ' (' + k.fleet_discovery_accuracy_pct.toFixed(0) + '%)</div>' +
+            '<div class="kpi-label">Shadow-AI &amp; Drift Repos Caught</div>' +
+            '<div class="kpi-sub"><em>' + k.shadow_ai_flagged + ' shadow repos &amp; ' + k.drift_violations_flagged + ' drifted services flagged in ' + k.bom_scan_p50_ms + ' ms median</em></div>' +
+          '</div>' +
+          '<div class="card kpi-card">' +
+            '<div class="kpi-val">' + k.risk_systems_matched + ' / ' + k.risk_systems_evaluated + ' (' + k.risk_classification_accuracy_pct.toFixed(0) + '%)</div>' +
+            '<div class="kpi-label">EU AI Act &amp; NIST RMF Gate</div>' +
+            '<div class="kpi-sub"><em>' + k.high_risk_recall_pct.toFixed(0) + '% high-risk &amp; prohibited recall in ' + k.risk_gate_p50_ms + ' ms median</em></div>' +
+          '</div>' +
+          '<div class="card kpi-card">' +
+            '<div class="kpi-val">' + k.resume_baseline_di.toFixed(2) + ' -&gt; ' + k.resume_mitigated_di.toFixed(2) + ' DI</div>' +
+            '<div class="kpi-label">Subgroup Fairness Mitigator</div>' +
+            '<div class="kpi-sub"><em>Restored 4/5ths compliance across ' + k.fairness_rows_per_scenario.toLocaleString() + ' rows in ' + k.fairness_audit_p50_ms.toFixed(1) + ' ms</em></div>' +
+          '</div>' +
+          '<div class="card kpi-card">' +
+            '<div class="kpi-val">' + k.sop_numeric_precision_pct.toFixed(0) + '% Grounded</div>' +
+            '<div class="kpi-label">Verified CS Policy Artifacts</div>' +
+            '<div class="kpi-sub"><em>' + k.sop_locales_distilled + ' multi-locale SOPs distilled on Bedrock · ' + k.sop_cross_locale_conflicts_caught + ' conflicts caught</em></div>' +
+          '</div>';
+
+        document.getElementById("tabMetric1").textContent =
+          k.fleet_repos_matched + " / " + k.fleet_repos_scanned + " Matched · " + k.bom_scan_p50_ms + " ms median";
+        document.getElementById("tabMetric2").textContent =
+          k.risk_systems_matched + " / " + k.risk_systems_evaluated + " Matched · " + k.risk_gate_p50_ms + " ms gate";
+        document.getElementById("tabMetric3").textContent =
+          "DI " + k.resume_baseline_di + " -> " + k.resume_mitigated_di + " · " + k.fairness_audit_p50_ms + " ms";
+        document.getElementById("tabMetric4").textContent =
+          k.sop_locales_distilled + " Locales · " + k.sop_mean_token_reduction_pct + "% Token Cut";
+
+        document.getElementById("benchSubHeader").textContent =
+          "Measured by benchmarks/run_benchmarks.py across " + k.fleet_repos_scanned + " microservice repositories, " +
+          k.risk_systems_evaluated + " golden EU AI Act systems, " + k.fairness_scenarios_total + " 4,000-row fairness datasets, " +
+          k.sop_locales_distilled + " localized CS SOPs, and " + k.bedrock_calls_measured + " live Amazon Bedrock Converse calls in " +
+          MEASURED_BENCHMARKS.environment.aws_region + ".";
+        document.getElementById("benchTimestampTag").textContent = MEASURED_BENCHMARKS.benchmark_timestamp_utc;
+
+        const stages = [
+          { label: "Risk Policy Gate", p50: k.risk_gate_p50_ms, color: "#059669" },
+          { label: "AST + IaC BOM Scan", p50: k.bom_scan_p50_ms, color: "#6D28D9" },
+          { label: "SQLite Hash Verify", p50: k.sqlite_ledger_verify_ms, color: "#1D4ED8" },
+          { label: "4k-Row Fairness Opt", p50: k.fairness_audit_p50_ms, color: "#D97706" },
+          { label: "Bedrock Nova Call", p50: k.bedrock_latency_p50_ms, color: "#18181B" }
+        ];
+        function logW(ms) {
+          const val = Math.max(0.015, ms);
+          const pct = ((Math.log10(val) - Math.log10(0.015)) / (Math.log10(1500) - Math.log10(0.015))) * 330;
+          return Math.max(8, Math.min(330, +pct.toFixed(1)));
+        }
+        let svgRows = "";
+        stages.forEach(function (st, i) {
+          const y = 22 + i * 33;
+          svgRows +=
+            '<text x="12" y="' + (y + 13) + '" font-family="monospace" font-size="10.5" font-weight="700" fill="#141413">' + esc(st.label) + '</text>' +
+            '<rect x="164" y="' + y + '" width="330" height="16" fill="#F2ECE1" stroke="#18181B" stroke-width="1.2"/>' +
+            '<rect x="164" y="' + y + '" width="' + logW(st.p50) + '" height="16" fill="' + st.color + '"/>' +
+            '<text x="502" y="' + (y + 12) + '" font-family="monospace" font-size="10" fill="#141413">p50: ' + st.p50 + ' ms</text>';
+        });
+        document.getElementById("benchLatencySvgBox").innerHTML =
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 610 194" style="width:100%; height:auto; display:block;">' +
+          '<rect width="610" height="194" fill="#FAF7F2"/>' + svgRows + '</svg>';
+
+        document.getElementById("benchMetricBars").innerHTML =
+          '<div class="bar-row"><div class="bar-meta"><span>Shadow-AI &amp; Drift Discovery Accuracy (' + k.fleet_repos_matched + ' / ' + k.fleet_repos_scanned + ')</span><span>' + k.fleet_discovery_accuracy_pct.toFixed(0) + '%</span></div><div class="bar-track"><div class="bar-fill bar-fill-accent" style="width:' + k.fleet_discovery_accuracy_pct + '%;"></div></div></div>' +
+          '<div class="bar-row"><div class="bar-meta"><span>EU AI Act High-Risk &amp; Prohibited Recall (' + k.risk_systems_matched + ' / ' + k.risk_systems_evaluated + ')</span><span>' + k.high_risk_recall_pct.toFixed(0) + '%</span></div><div class="bar-track"><div class="bar-fill bar-fill-pass" style="width:' + k.high_risk_recall_pct + '%;"></div></div></div>' +
+          '<div class="bar-row"><div class="bar-meta"><span>SOP Numeric Precision &amp; Exception Recall (' + k.sop_locales_distilled + ' Locales)</span><span>' + k.sop_exception_recall_pct.toFixed(0) + '%</span></div><div class="bar-track"><div class="bar-fill bar-fill-accent" style="width:' + k.sop_exception_recall_pct + '%;"></div></div></div>';
+
+        document.getElementById("benchFairnessBody").innerHTML = (MEASURED_BENCHMARKS.fairness_mitigation_results || []).map(function (f) {
+          return (
+            "<tr>" +
+              "<td><strong>" + esc(f.scenario_id) + "</strong></td>" +
+              "<td class='mono'>" + f.baseline_di + " -&gt; <strong style='color:var(--pass);'>" + f.mitigated_di + "</strong></td>" +
+              "<td class='mono'>" + f.baseline_delta_tpr + " -&gt; <strong>" + f.mitigated_delta_tpr + "</strong></td>" +
+              "<td class='mono'>" + (f.f1_delta >= 0 ? "+" : "") + f.f1_delta + "</td>" +
+              "<td class='mono'>" + f.audit_ms + " ms</td>" +
+            "</tr>"
+          );
+        }).join("");
+
+        document.getElementById("benchSopBody").innerHTML = (MEASURED_BENCHMARKS.sop_distillation_results || []).map(function (s) {
+          return (
+            "<tr>" +
+              "<td class='mono'><strong>" + esc(s.policy_family) + "</strong></td>" +
+              "<td class='mono'>" + s.numeric_precision_pct + "% / " + s.exception_recall_pct + "%</td>" +
+              "<td class='mono'>" + s.prompt_token_reduction_pct + "%</td>" +
+              "<td><span class='tag tag-warn'>" + s.conflicts_detected + " caught</span></td>" +
+            "</tr>"
+          );
+        }).join("");
+
+        document.getElementById("benchFleetBody").innerHTML = (MEASURED_BENCHMARKS.fleet_discovery_results || []).map(function (r) {
+          const cls = r.conformance_status === "COMPLIANT_REGISTERED" ? "tag-pass" : (r.conformance_status === "DRIFT_VIOLATION" ? "tag-warn" : "tag-fail");
+          return (
+            "<tr>" +
+              "<td class='mono'><strong>" + esc(r.repo_id) + "</strong></td>" +
+              "<td class='mono'>" + esc(r.deploy_region) + "</td>" +
+              "<td><span class='tag " + cls + "'>" + esc(r.conformance_status) + "</span></td>" +
+              "<td class='mono'>" + r.findings_count + "</td>" +
+              "<td class='mono'>" + r.scan_ms + " ms</td>" +
+            "</tr>"
+          );
+        }).join("");
+
+        document.getElementById("benchBedrockBody").innerHTML = (MEASURED_BENCHMARKS.live_bedrock_calls || []).map(function (c) {
+          return (
+            "<tr>" +
+              "<td class='mono'><strong>" + esc(c.call_id) + "</strong></td>" +
+              "<td>" + esc(c.module) + "<div class='mono' style='font-size:0.67rem; color:var(--ink-muted);'>" + esc(c.target) + "</div></td>" +
+              "<td><span class='tag tag-soft'>" + esc(c.verdict) + "</span></td>" +
+              "<td class='mono'>" + c.latency_ms + " ms</td>" +
+              "<td class='mono'>" + c.tokens + "</td>" +
+            "</tr>"
+          );
+        }).join("");
+      }
+
+      // Tab 1: Shadow-AI Discovery
+      function populateBomRepoDropdown() {
+        const sel = document.getElementById("bomRepoSelect");
+        sel.innerHTML = state.fleetRepos.map(function (r, idx) {
+          return '<option value="' + esc(r.repo_id) + '"' + (idx === 1 ? " selected" : "") + '>' + esc(r.repo_id) + ' (' + esc(r.expected_status || "SCAN") + ')</option>';
+        }).join("");
+        loadSelectedBomRepo();
+      }
+
+      window.loadSelectedBomRepo = function () {
+        const repoId = document.getElementById("bomRepoSelect").value;
+        const found = state.fleetRepos.find(function (r) { return r.repo_id === repoId; }) || state.fleetRepos[0];
+        if (!found) return;
+        document.getElementById("bomServiceIdInput").value = found.service_id;
+        document.getElementById("bomRegionInput").value = found.deploy_region;
+        document.getElementById("bomPythonInput").value = found.python_code;
+        document.getElementById("bomIacInput").value = JSON.stringify(found.iac_template || {}, null, 2);
+      };
+
+      function renderBomScanResult(res) {
+        const banner = document.getElementById("bomVerdictBanner");
+        const st = res.conformance_status;
+        if (st === "COMPLIANT_REGISTERED") {
+          banner.className = "verdict-banner verdict-allow";
+          banner.innerHTML =
+            "<div><strong>✅ COMPLIANT REGISTERED AI WORKLOAD</strong><br/><span style='font-size:0.82rem;'>Service <code>" + esc(res.service_id) + "</code> matches the central SQLite AI-BOM catalog with valid guardrails and bounded retention.</span></div>" +
+            "<span class='tag tag-pass'>COMPLIANT</span>";
+        } else if (st === "DRIFT_VIOLATION") {
+          banner.className = "verdict-banner verdict-warn";
+          banner.innerHTML =
+            "<div><strong>⚠ REGISTERED WORKLOAD DRIFT VIOLATION</strong><br/><span style='font-size:0.82rem;'>Service <code>" + esc(res.service_id) + "</code> is registered, but AST/IaC drifted from approved region, model, guardrail, or retention rules.</span></div>" +
+            "<span class='tag tag-warn'>" + res.findings.length + " DRIFT FINDINGS</span>";
+        } else {
+          banner.className = "verdict-banner verdict-deny";
+          banner.innerHTML =
+            "<div><strong>🛑 SHADOW AI DEPLOYMENT FLAGGED</strong><br/><span style='font-size:0.82rem;'>Service <code>" + esc(res.service_id) + "</code> invokes foundation models or external SDKs with zero entry in <code>approved_ai_bom</code>.</span></div>" +
+            "<span class='tag tag-fail'>" + res.findings.length + " FINDINGS</span>";
+        }
+
+        document.getElementById("bomFindingsList").innerHTML = (res.findings || []).map(function (f) {
+          const cls = f.severity === "CRITICAL" ? "tag-fail" : "tag-warn";
+          return (
+            '<div class="timeline-item">' +
+              '<div style="display:flex; justify-content:space-between; align-items:center; gap:0.4rem;">' +
+                '<span class="mono" style="font-size:0.72rem; font-weight:700;">' + esc(f.code) + '</span>' +
+                '<span class="tag ' + cls + '">' + esc(f.severity) + '</span>' +
+              '</div>' +
+              '<div style="font-size:0.83rem; margin-top:0.22rem;">' + esc(f.detail) + '</div>' +
+            '</div>'
+          );
+        }).join("") || '<div class="timeline-item" style="color:var(--pass); font-weight:700;">0 governance violations detected across Python AST and CloudFormation resources.</div>';
+
+        document.getElementById("bomTimingTag").textContent =
+          "AST scan: " + res.scan_ms + " ms" + (res.bedrock_latency_ms ? " · Bedrock: " + res.bedrock_latency_ms + " ms" : "");
+        document.getElementById("bomOutputConsole").textContent = JSON.stringify({
+          service_id: res.service_id,
+          deploy_region: res.deploy_region,
+          conformance_status: res.conformance_status,
+          remediation_brief: res.remediation_brief,
+          ai_bom_entry: res.ai_bom_entry,
+          audit_receipt: res.audit_receipt
+        }, null, 2);
+      }
+
+      window.runSingleBomScanLive = async function () {
+        const btn = document.getElementById("btnRunBomScan");
+        btn.disabled = true;
+        try {
+          let iacObj = {};
+          const rawIac = document.getElementById("bomIacInput").value.trim();
+          if (rawIac) iacObj = JSON.parse(rawIac);
+          const out = await apiPost("/api/bom/discover", {
+            repo_id: document.getElementById("bomRepoSelect").value,
+            service_id: document.getElementById("bomServiceIdInput").value.trim(),
+            deploy_region: document.getElementById("bomRegionInput").value.trim(),
+            python_code: document.getElementById("bomPythonInput").value,
+            iac_template: iacObj,
+            use_bedrock: document.getElementById("bomUseBedrock").checked
+          });
+          renderBomScanResult(out);
+          await refreshLedgerOnly();
+        } catch (err) {
+          document.getElementById("bomOutputConsole").textContent = "Scan error: " + err.message;
+        } finally {
+          btn.disabled = false;
+        }
+      };
+
+      window.runFullFleetScanLive = async function () {
+        const btn = document.getElementById("btnScanFleetAll");
+        btn.disabled = true;
+        try {
+          const out = await apiPost("/api/bom/discover", { scan_all: true, use_bedrock: false });
+          const banner = document.getElementById("bomVerdictBanner");
+          banner.className = "verdict-banner verdict-warn";
+          banner.innerHTML =
+            "<div><strong>📡 12-REPO FLEET DISCOVERY COMPLETED IN " + out.total_scan_ms + " ms</strong><br/><span style='font-size:0.82rem;'>Flagged <strong>" + out.shadow_unregistered + "</strong> shadow-AI repos, <strong>" + out.drift_violations + "</strong> drifted services, and verified <strong>" + out.compliant_registered + "</strong> compliant systems (" + out.discovery_accuracy_pct + "% match).</span></div>" +
+            "<span class='tag tag-accent'>12 / 12 SCANNED</span>";
+          document.getElementById("bomTimingTag").textContent = "12 repos: " + out.total_scan_ms + " ms";
+          document.getElementById("bomOutputConsole").textContent = JSON.stringify(out, null, 2);
+          await refreshLedgerOnly();
+        } catch (err) {
+          document.getElementById("bomOutputConsole").textContent = "Fleet scan error: " + err.message;
+        } finally {
+          btn.disabled = false;
+        }
+      };
+
+      // Tab 2: EU AI Act & NIST RMF Conformance Gate
+      function populateRiskPresetsDropdown() {
+        const sel = document.getElementById("riskPresetSelect");
+        sel.innerHTML = state.riskPresets.map(function (s, idx) {
+          return '<option value="' + esc(s.system_id) + '"' + (idx === 4 ? " selected" : "") + '>' + esc(s.title) + '</option>';
+        }).join("");
+        loadSelectedRiskPreset();
+      }
+
+      window.loadSelectedRiskPreset = function () {
+        const sysId = document.getElementById("riskPresetSelect").value;
+        const found = state.riskPresets.find(function (s) { return s.system_id === sysId; }) || state.riskPresets[0];
+        if (!found) return;
+        const domSel = document.getElementById("riskDomainSelect");
+        if ([...domSel.options].some(function (o) { return o.value === found.domain; })) {
+          domSel.value = found.domain;
+        }
+        document.getElementById("riskJurisdictionsInput").value = (found.jurisdictions || ["EU", "US"]).join(", ");
+        document.getElementById("riskDescInput").value = found.description || "";
+        document.getElementById("riskHumanGenai").checked = !!found.human_facing_genai;
+        const present = new Set(found.controls_present || []);
+        document.querySelectorAll("#riskControlsCheckboxes input[type='checkbox']").forEach(function (cb) {
+          cb.checked = present.has(cb.value);
+        });
+      };
+
+      function renderRiskResult(res) {
+        const banner = document.getElementById("riskVerdictBanner");
+        if (res.release_verdict === "PASS_RELEASE") {
+          banner.className = "verdict-banner verdict-allow";
+          banner.innerHTML =
+            "<div><strong>✅ CI/CD RELEASE VERDICT: PASS_RELEASE (" + esc(res.risk_tier) + ")</strong><br/><span style='font-size:0.82rem;'>All " + res.required_controls.length + " mandatory conformance controls verified for EU AI Act &amp; NIST AI RMF release.</span></div>" +
+            "<span class='tag tag-pass'>PASS_RELEASE</span>";
+        } else if (res.release_verdict === "BLOCK_PROHIBITED_USE") {
+          banner.className = "verdict-banner verdict-deny";
+          banner.innerHTML =
+            "<div><strong>🛑 CI/CD RELEASE VERDICT: BLOCK_PROHIBITED_USE (EU AI Act Art. 5)</strong><br/><span style='font-size:0.82rem;'>Unacceptable risk practice prohibited under Article 5. No technical control toggle permits production launch.</span></div>" +
+            "<span class='tag tag-fail'>PROHIBITED</span>";
+        } else {
+          banner.className = "verdict-banner verdict-warn";
+          banner.innerHTML =
+            "<div><strong>⏸ CI/CD RELEASE VERDICT: BLOCK_MISSING_CONTROLS (" + esc(res.risk_tier) + ")</strong><br/><span style='font-size:0.82rem;'>Missing " + res.missing_controls.length + " required control(s): <code>" + esc(res.missing_controls.join(", ")) + "</code></span></div>" +
+            "<span class='tag tag-fail'>BLOCKED</span>";
+        }
+
+        const mc = res.model_card || {};
+        document.getElementById("riskSummaryCards").innerHTML =
+          '<div class="timeline-item">' +
+            '<div class="mono" style="font-size:0.71rem; font-weight:700; color:var(--accent-main);">EU AI ACT CITATIONS &amp; NIST RMF MAPPINGS</div>' +
+            '<div style="font-size:0.84rem; margin-top:0.22rem;"><strong>Citations:</strong> ' + esc((mc.eu_ai_act_citations || []).join(" · ")) + '</div>' +
+            '<div style="font-size:0.84rem; margin-top:0.18rem;"><strong>NIST AI RMF:</strong> <code>' + esc((mc.nist_ai_rmf_mappings || []).join(", ")) + '</code></div>' +
+            '<div style="font-size:0.84rem; margin-top:0.18rem;"><strong>Human Oversight:</strong> ' + esc(res.human_oversight_requirement) + '</div>' +
+          '</div>';
+
+        document.getElementById("riskTimingTag").textContent =
+          "policy: " + res.policy_eval_ms + " ms" + (res.bedrock_latency_ms ? " · Bedrock: " + res.bedrock_latency_ms + " ms" : "");
+        document.getElementById("riskModelCardBox").textContent = JSON.stringify(res.model_card, null, 2);
+      }
+
+      window.runRiskClassificationLive = async function () {
+        const btn = document.getElementById("btnRunRiskGate");
+        btn.disabled = true;
+        try {
+          const controls = [];
+          document.querySelectorAll("#riskControlsCheckboxes input[type='checkbox']:checked").forEach(function (cb) {
+            controls.push(cb.value);
+          });
+          const sysId = document.getElementById("riskPresetSelect").value || "custom-workload";
+          const preset = state.riskPresets.find(function (s) { return s.system_id === sysId; });
+          const jurisdictions = document.getElementById("riskJurisdictionsInput").value
+            .split(",")
+            .map(function (s) { return s.trim(); })
+            .filter(Boolean);
+
+          const out = await apiPost("/api/risk/classify", {
+            system_id: sysId,
+            title: preset ? preset.title : sysId,
+            domain: document.getElementById("riskDomainSelect").value,
+            description: document.getElementById("riskDescInput").value.trim(),
+            jurisdictions: jurisdictions,
+            human_facing_genai: document.getElementById("riskHumanGenai").checked,
+            prohibited_signals: preset ? (preset.prohibited_signals || []) : [],
+            controls_present: controls,
+            use_bedrock: true
+          });
+          renderRiskResult(out);
+          await refreshLedgerOnly();
+        } catch (err) {
+          document.getElementById("riskModelCardBox").textContent = "Classification error: " + err.message;
+        } finally {
+          btn.disabled = false;
+        }
+      };
+
+      // Tab 3: Subgroup Fairness & Threshold Mitigator
+      function renderFairnessResult(res) {
+        const activeMetrics = (res.mitigation_applied && res.mitigated_metrics) ? res.mitigated_metrics : res.baseline_metrics;
+        const base = res.baseline_metrics;
+        const banner = document.getElementById("fairVerdictBanner");
+
+        if (activeMetrics.fairness_verdict === "PASS_FAIRNESS") {
+          banner.className = "verdict-banner verdict-allow";
+          banner.innerHTML =
+            "<div><strong>✅ PASS_FAIRNESS (4/5ths DI = " + activeMetrics.disparate_impact_ratio + " &gt;= 0.80)</strong><br/><span style='font-size:0.82rem;'>Baseline uniform τ=" + res.base_threshold + " failed at DI=" + base.disparate_impact_ratio + "; group thresholds lifted DI to " + activeMetrics.disparate_impact_ratio + " and cut |ΔTPR| from " + base.equal_opportunity_diff_tpr + " to " + activeMetrics.equal_opportunity_diff_tpr + " (F1 delta " + (res.f1_tradeoff_delta >= 0 ? "+" : "") + res.f1_tradeoff_delta + ").</span></div>" +
+            "<span class='tag tag-pass'>COMPLIANT</span>";
+        } else {
+          banner.className = "verdict-banner verdict-deny";
+          banner.innerHTML =
+            "<div><strong>🛑 FAIL_FAIRNESS_VIOLATION (4/5ths DI = " + activeMetrics.disparate_impact_ratio + " &lt; 0.80)</strong><br/><span style='font-size:0.82rem;'>Uniform cutoff τ=" + res.base_threshold + " produces disparate impact below 0.80 and |ΔTPR|=" + activeMetrics.equal_opportunity_diff_tpr + ". Enable <em>Optimize Per-Cohort Thresholds</em> to mitigate.</span></div>" +
+            "<span class='tag tag-fail'>BIAS DETECTED</span>";
+        }
+
+        document.getElementById("fairTimingTag").textContent =
+          res.rows_evaluated.toLocaleString() + " rows · " + res.audit_ms + " ms · ECE=" + activeMetrics.overall_ece;
+
+        document.getElementById("fairComparisonBars").innerHTML =
+          '<div class="bar-group">' +
+            '<div class="bar-row"><div class="bar-meta"><span>Unmitigated Disparate Impact (Uniform τ=' + res.base_threshold + ')</span><span style="color:var(--fail);">' + base.disparate_impact_ratio + ' (Fails 0.80)</span></div><div class="bar-track"><div class="bar-fill" style="width:' + Math.min(100, base.disparate_impact_ratio * 100) + '%; background:var(--fail);"></div></div></div>' +
+            '<div class="bar-row"><div class="bar-meta"><span>Active Disparate Impact (' + (res.mitigation_applied ? 'Optimized Group Cutoffs' : 'Uniform Cutoff') + ')</span><span style="color:' + (activeMetrics.passes_four_fifths_rule ? 'var(--pass)' : 'var(--fail)') + ';">' + activeMetrics.disparate_impact_ratio + '</span></div><div class="bar-track"><div class="bar-fill ' + (activeMetrics.passes_four_fifths_rule ? 'bar-fill-pass' : '') + '" style="width:' + Math.min(100, activeMetrics.disparate_impact_ratio * 100) + '%;' + (!activeMetrics.passes_four_fifths_rule ? 'background:var(--fail);' : '') + '"></div></div></div>' +
+            '<div class="bar-row"><div class="bar-meta"><span>Overall F1 Score</span><span>' + activeMetrics.overall_f1 + '</span></div><div class="bar-track"><div class="bar-fill bar-fill-accent" style="width:' + Math.min(100, activeMetrics.overall_f1 * 100) + '%;"></div></div></div>' +
+          '</div>';
+
+        document.getElementById("fairSubgroupBody").innerHTML = (activeMetrics.subgroups || []).map(function (g) {
+          const diOk = g.disparate_impact_vs_ref >= 0.80;
+          return (
+            "<tr>" +
+              "<td class='mono'><strong>" + esc(g.group) + "</strong> (n=" + g.count + ")</td>" +
+              "<td class='mono'><strong>" + g.threshold.toFixed(2) + "</strong></td>" +
+              "<td class='mono'>" + g.TP + " / " + g.FP + " / " + g.TN + " / " + g.FN + "</td>" +
+              "<td class='mono'>" + (g.selection_rate * 100).toFixed(1) + "%</td>" +
+              "<td class='mono'>" + g.TPR.toFixed(3) + " / " + g.FPR.toFixed(3) + "</td>" +
+              "<td><span class='tag " + (diOk ? "tag-pass" : "tag-fail") + "'>" + g.disparate_impact_vs_ref.toFixed(3) + "</span></td>" +
+            "</tr>"
+          );
+        }).join("");
+
+        document.getElementById("fairSummaryJsonBox").textContent = JSON.stringify({
+          scenario_id: res.scenario_id,
+          baseline_di: base.disparate_impact_ratio,
+          active_di: activeMetrics.disparate_impact_ratio,
+          baseline_delta_tpr: base.equal_opportunity_diff_tpr,
+          active_delta_tpr: activeMetrics.equal_opportunity_diff_tpr,
+          active_delta_fpr: activeMetrics.false_positive_diff_fpr,
+          expected_calibration_error: activeMetrics.overall_ece,
+          recommended_group_thresholds: res.recommended_group_thresholds,
+          f1_tradeoff_delta: res.f1_tradeoff_delta
+        }, null, 2);
+      }
+
+      window.runFairnessAuditLive = async function () {
+        const btn = document.getElementById("btnRunFairness");
+        btn.disabled = true;
+        try {
+          const out = await apiPost("/api/fairness/audit", {
+            scenario_id: document.getElementById("fairScenarioSelect").value,
+            base_threshold: parseFloat(document.getElementById("fairThresholdSelect").value),
+            mitigate: document.getElementById("fairMitigateToggle").checked
+          });
+          renderFairnessResult(out);
+          await refreshLedgerOnly();
+        } catch (err) {
+          document.getElementById("fairSummaryJsonBox").textContent = "Audit error: " + err.message;
+        } finally {
+          btn.disabled = false;
+        }
+      };
+
+      // Tab 4: Verified CS Knowledge Artifact Distiller
+      window.loadSelectedSopBundle = function () {
+        loadSelectedSopLocaleText();
+      };
+
+      window.loadSelectedSopLocaleText = function () {
+        const fam = document.getElementById("sopFamilySelect").value;
+        const loc = document.getElementById("sopLocaleSelect").value;
+        const famMap = state.sopBundles[fam] || state.sopBundles.electronics_returns || {};
+        document.getElementById("sopProseInput").value = famMap[loc] || "";
+      };
+
+      window.fixEsUsConflictPreset = function () {
+        document.getElementById("sopFamilySelect").value = "electronics_returns";
+        document.getElementById("sopLocaleSelect").value = "es-US";
+        document.getElementById("sopProseInput").value =
+          "Procedimiento Operativo EE. UU. sincronizado (SOP-CS-RET-ES-US-2026.4). Los clientes en EE. UU. pueden devolver electronicos dentro de 30 dias con 0% de tarifa de reposicion. Excepciones obligatorias: (1) software fisico abierto y tarjetas digitales no son reembolsables; (2) baterias de litio mayores a 100 Wh requieren transporte terrestre de materiales peligrosos; (3) articulos sin serial number requieren retencion de 7 dias. El reembolso tarda hasta 5 dias habiles.";
+        runSopDistillLive();
+      };
+
+      window.injectBadDe7DayPreset = function () {
+        document.getElementById("sopFamilySelect").value = "electronics_returns";
+        document.getElementById("sopLocaleSelect").value = "de-DE";
+        document.getElementById("sopProseInput").value =
+          "Fehlerhafter Entwurf Deutschland: Kunden koennen Elektronik nur innerhalb von 7 Tagen bei 0% Gebuehr zurueckgeben. Entsiegelte physische Software, 100 Wh Akkus und fehlende Seriennummer sind ausgeschlossen. Erstattung binnen 5 Werktagen.";
+        runSopDistillLive();
+      };
+
+      function renderSopResult(res) {
+        const banner = document.getElementById("sopVerdictBanner");
+        if (res.publish_verdict === "READY_TO_PUBLISH") {
+          banner.className = "verdict-banner verdict-allow";
+          banner.innerHTML =
+            "<div><strong>✅ READY_TO_PUBLISH (0 Blocking Cross-Locale Conflicts)</strong><br/><span style='font-size:0.82rem;'>All 4 locales verified at " + res.metrics.numeric_entailment_precision_pct + "% numeric precision and " + res.metrics.exception_clause_recall_pct + "% exception recall (" + res.metrics.prompt_token_reduction_pct + "% prompt token reduction).</span></div>" +
+            "<span class='tag tag-pass'>VERIFIED</span>";
+        } else {
+          banner.className = "verdict-banner verdict-deny";
+          banner.innerHTML =
+            "<div><strong>🛑 BLOCK_LOCALE_CONFLICT (" + res.metrics.blocking_conflicts + " Blocking Contradiction(s) Caught)</strong><br/><span style='font-size:0.82rem;'>Distilled 4 Knowledge Artifacts with " + res.metrics.numeric_entailment_precision_pct + "% numeric grounding, but blocked publish due to cross-locale policy drift.</span></div>" +
+            "<span class='tag tag-fail'>PUBLISH BLOCKED</span>";
+        }
+
+        document.getElementById("sopConflictsList").innerHTML = (res.cross_locale_conflicts || []).map(function (c) {
+          const cls = c.severity === "CRITICAL" ? "tag-fail" : "tag-warn";
+          return (
+            '<div class="timeline-item">' +
+              '<div style="display:flex; justify-content:space-between; align-items:center; gap:0.4rem;">' +
+                '<span class="mono" style="font-size:0.71rem; font-weight:700;">' + esc(c.conflict_id) + ' (' + esc((c.locales || []).join(" vs ")) + ')</span>' +
+                '<span class="tag ' + cls + '">' + esc(c.severity) + '</span>' +
+              '</div>' +
+              '<div style="font-size:0.83rem; margin-top:0.22rem;">' + esc(c.detail) + '</div>' +
+            '</div>'
+          );
+        }).join("") || '<div class="timeline-item" style="color:var(--pass); font-weight:700;">All marketplace locales are synchronized and statutory withdrawal minimums are satisfied.</div>';
+
+        document.getElementById("sopArtifactsTableBody").innerHTML = (res.artifacts || []).map(function (a) {
+          const v = a.entailment_verification || {};
+          return (
+            "<tr>" +
+              "<td class='mono'><strong>" + esc(a.locale) + "</strong> (" + esc(a.marketplace) + ")</td>" +
+              "<td class='mono'>" + a.refund_window_days + "d</td>" +
+              "<td class='mono'>" + a.restocking_fee_pct + "%</td>" +
+              "<td class='mono'>" + (a.exceptions || []).length + " rules</td>" +
+              "<td><span class='tag " + (v.entailed ? "tag-pass" : "tag-fail") + "'>" + v.numeric_precision_pct + "% / " + (v.span_verified ? "SPAN OK" : "REJECTED") + "</span></td>" +
+              "<td class='mono'>-" + v.prompt_token_reduction_pct + "%</td>" +
+            "</tr>"
+          );
+        }).join("");
+
+        document.getElementById("sopTimingTag").textContent =
+          "total: " + res.total_distill_ms + " ms" + (res.bedrock_latency_ms ? " · Bedrock: " + res.bedrock_latency_ms + " ms" : "");
+        document.getElementById("sopJsonOutputBox").textContent = JSON.stringify(res.artifacts, null, 2);
+      }
+
+      window.runSopDistillLive = async function () {
+        const btn = document.getElementById("btnRunDistill");
+        btn.disabled = true;
+        try {
+          const out = await apiPost("/api/artifacts/distill", {
+            policy_family: document.getElementById("sopFamilySelect").value,
+            locale: document.getElementById("sopLocaleSelect").value,
+            sop_text: document.getElementById("sopProseInput").value,
+            use_bedrock: document.getElementById("sopUseBedrock").checked
+          });
+          renderSopResult(out);
+          await refreshLedgerOnly();
+        } catch (err) {
+          document.getElementById("sopJsonOutputBox").textContent = "Distillation error: " + err.message;
+        } finally {
+          btn.disabled = false;
+        }
+      };
+
+      function renderLedgerEvents(chain, events) {
+        if (chain) {
+          const badge = document.getElementById("ledgerChainBadge");
+          badge.className = chain.valid ? "tag tag-pass" : "tag tag-fail";
+          badge.textContent = chain.valid
+            ? "SHA-256 Chain VALID (" + chain.checked_rows + " receipts · " + chain.verify_ms + " ms)"
+            : "SHA-256 Chain BROKEN";
+        }
+        document.getElementById("ledgerEventsBody").innerHTML = (events || []).slice(0, 8).map(function (ev) {
+          const v = String(ev.verdict || "");
+          const cls = (v.indexOf("SHADOW") >= 0 || v.indexOf("BLOCK") >= 0 || v.indexOf("FAIL") >= 0)
+            ? "tag-warn"
+            : "tag-pass";
+          return (
+            "<tr>" +
+              "<td class='mono'><strong>" + esc(ev.event_id) + "</strong></td>" +
+              "<td class='mono'>" + esc(ev.gate_module) + "</td>" +
+              "<td class='mono'>" + esc(ev.subject_id) + "</td>" +
+              "<td><span class='tag " + cls + "'>" + esc(v) + "</span></td>" +
+              "<td class='mono'>" + Number(ev.duration_ms || 0).toFixed(2) + " ms</td>" +
+              "<td class='mono' style='font-size:0.68rem;'>" + esc(String(ev.sha256_hash || "").slice(0, 18)) + "…</td>" +
+            "</tr>"
+          );
+        }).join("");
+      }
+
+      async function refreshLedgerOnly() {
+        try {
+          const snap = await apiGet("/api/state");
+          if (snap && snap.audit_events) {
+            state.auditEvents = snap.audit_events;
+            renderLedgerEvents(snap.audit_chain, snap.audit_events);
+          }
+        } catch (_) {}
+      }
+
+      window.resetLedgerLive = async function () {
+        try {
+          await apiPost("/api/reset", {});
+          await bootstrapFromApi();
+        } catch (_) {}
+      };
+
+      async function bootstrapFromApi() {
+        try {
+          const snap = await apiGet("/api/state");
+          if (snap && Array.isArray(snap.fleet_repos) && snap.fleet_repos.length) {
+            state.fleetRepos = snap.fleet_repos;
+            populateBomRepoDropdown();
+          }
+          if (snap && Array.isArray(snap.risk_presets) && snap.risk_presets.length) {
+            state.riskPresets = snap.risk_presets;
+            populateRiskPresetsDropdown();
+          }
+          if (snap && Array.isArray(snap.sop_bundles) && snap.sop_bundles.length) {
+            const map = {};
+            snap.sop_bundles.forEach(function (b) { map[b.policy_family] = b.locales; });
+            state.sopBundles = map;
+            loadSelectedSopLocaleText();
+          }
+          if (snap && snap.benchmarks && snap.benchmarks.headline_kpis) {
+            MEASURED_BENCHMARKS = snap.benchmarks;
+            renderMeasuredKpisAndBenchmarks();
+          }
+          renderLedgerEvents(snap.audit_chain, snap.audit_events);
+
+          // Pre-populate initial live views deterministically on page load for instant responsiveness
+          const [bomInit, riskInit, fairInit, sopInit] = await Promise.all([
+            apiPost("/api/bom/discover", { repo_id: "repo-02-shadow-hr-screener", use_bedrock: false }),
+            apiPost("/api/risk/classify", { system_id: "sys-05-candidate-resume-ranker-missing-hitl", use_bedrock: false }),
+            apiPost("/api/fairness/audit", { scenario_id: "resume_screening_v2", base_threshold: 0.50, mitigate: true }),
+            apiPost("/api/artifacts/distill", { policy_family: "electronics_returns", use_bedrock: false })
+          ]);
+          renderBomScanResult(bomInit);
+          renderRiskResult(riskInit);
+          renderFairnessResult(fairInit);
+          renderSopResult(sopInit);
+          await refreshLedgerOnly();
+        } catch (_) {}
+      }
+
+      parseHashState();
+      applyTheme(activeTheme);
+      switchTab(activeTab);
+      selectArchNode("gate-bom");
+      renderMeasuredKpisAndBenchmarks();
+      populateBomRepoDropdown();
+      populateRiskPresetsDropdown();
+      loadSelectedSopLocaleText();
+      bootstrapFromApi();
+    })();
+  </script>
+</body>
+</html>
