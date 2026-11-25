@@ -963,7 +963,7 @@
           <span class="section-kicker">02 · Architecture</span>
           <h2 class="section-title">Architecture</h2>
           <p class="section-desc">
-            Static UI assets are served from a private Amazon S3 bucket through CloudFront Origin Access Control, while <code>/api/*</code> routes invoke Python 3.12 on AWS Lambda backed by SQLite WAL and Amazon Bedrock.
+            Static UI assets are served from a private Amazon S3 bucket through CloudFront Origin Access Control, while <code>/api/*</code> routes invoke AWS Lambda backed by SQLite WAL and Amazon Bedrock.
           </p>
         </div>
       </div>
@@ -994,7 +994,7 @@
 
           <!-- LAYER 1: EDGE & SERVERLESS API -->
           <rect x="22" y="18" width="1176" height="146" fill="#FAFAFA" stroke="#71717A" stroke-width="1.6" stroke-dasharray="8 6" />
-          <text x="36" y="41" class="svg-title" font-size="21" font-weight="700" fill="#6D28D9">① Browser Console &amp; Serverless AWS Edge (CloudFront + Private S3 OAC + Python 3.12 Lambda)</text>
+          <text x="36" y="41" class="svg-title" font-size="21" font-weight="700" fill="#6D28D9">① Browser Console &amp; Serverless AWS Edge (CloudFront + Private S3 OAC + AWS Lambda)</text>
 
           <g class="arch-node selected" data-arch-node="edge-browser" tabindex="0">
             <rect x="38" y="55" width="202" height="84" fill="#EDE9FE" />
@@ -1034,7 +1034,7 @@
           <g class="arch-node" data-arch-node="edge-lambda" tabindex="0">
             <rect x="640" y="100" width="272" height="53" fill="#FEF3C7" />
             <rect class="arch-stroke-main" x="640" y="100" width="272" height="53" fill="none" stroke="#18181B" stroke-width="2" />
-            <text x="776" y="123" text-anchor="middle" class="svg-title" font-size="20" font-weight="700" fill="#18181B">AWS Lambda API (Python 3.12)</text>
+            <text x="776" y="123" text-anchor="middle" class="svg-title" font-size="20" font-weight="700" fill="#18181B">AWS Lambda API</text>
             <text x="776" y="142" text-anchor="middle" class="svg-mono" font-size="9.4" fill="#92400E">rai_registry/server.py · 512 MB</text>
           </g>
 
@@ -1159,7 +1159,7 @@
           <span class="section-kicker">03 · Implementation</span>
           <h2 class="section-title">Implementation</h2>
           <p class="section-desc">
-            Five Python 3.12 modules inside <code>rai_registry/</code> implement AST and CloudFormation discovery, regulatory risk gating, statistical fairness optimization, write-time SOP distillation, and unified local or Lambda serving.
+            Five backend modules inside <code>rai_registry/</code> implement AST and CloudFormation discovery, regulatory risk gating, statistical fairness optimization, write-time SOP distillation, and unified local or Lambda serving.
           </p>
         </div>
         <span class="tag tag-pass">12 / 12 Unit Tests Passing</span>
@@ -1287,7 +1287,7 @@
           <span class="section-kicker">05 · Live Demo</span>
           <h2 class="section-title">Live Demo</h2>
           <p class="section-desc">
-            All four interactive studios call the live Python 3.12 <code>/api/*</code> backend and Amazon Bedrock (<code>us.amazon.nova-lite-v1:0</code>), recording every governance receipt in the SHA-256 SQLite WAL ledger.
+            All four interactive studios call the live serverless <code>/api/*</code> backend and Amazon Bedrock (<code>us.amazon.nova-lite-v1:0</code>), recording every governance receipt in the SHA-256 SQLite WAL ledger.
           </p>
         </div>
         <span class="tag tag-accent">Live AWS /api/* + Bedrock</span>
@@ -1865,10 +1865,10 @@
         },
         "edge-lambda": {
           plane: "Layer ① · Browser Console & Serverless Edge",
-          title: "AWS Lambda Python 3.12 API Origin",
+          title: "AWS Lambda API Origin",
           module: "rai_registry/server.py :: lambda_handler & route_api_request",
           summary: "Executes /api/health, /api/bom/discover, /api/risk/classify, /api/fairness/audit, /api/artifacts/distill, /api/benchmarks, and /api/reset on demand.",
-          metric: "Python 3.12 · 512 MB · 30s Timeout"
+          metric: "AWS Lambda · 512 MB · 30s Timeout"
         },
         "gate-bom": {
           plane: "Layer ② · Fleet Discovery & Risk Conformance",

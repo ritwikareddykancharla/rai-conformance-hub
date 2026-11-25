@@ -4,7 +4,7 @@
 - **Live `/api/health` Endpoint**: https://d26dk62sabtevx.cloudfront.net/api/health
 - **GitHub Repository**: https://github.com/ritwikareddykancharla/rai-conformance-hub
 
-ResponsibleAIRegistry is a Python 3.12 AI governance, statistical fairness, and Customer Service policy distillation platform deployed on **Amazon CloudFront + Private S3 (OAC) + AWS Lambda (`python3.12`) + SQLite WAL + Amazon Bedrock (`us.amazon.nova-lite-v1:0`)**.
+ResponsibleAIRegistry is a AWS Lambda AI governance, statistical fairness, and Customer Service policy distillation platform deployed on **Amazon CloudFront + Private S3 (OAC) + AWS Lambda (serverless) + SQLite WAL + Amazon Bedrock (`us.amazon.nova-lite-v1:0`)**.
 
 ![ResponsibleAIRegistry System Architecture](docs/architecture.svg)
 
